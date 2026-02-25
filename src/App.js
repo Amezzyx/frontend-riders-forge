@@ -162,7 +162,7 @@ const sampleProducts = [
 
 function App() {
   const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState([]);
 
   // Load products from backend on mount
