@@ -206,7 +206,10 @@ const AdminDashboard = () => {
                                 <td>
                                   <button
                                     className="action-btn"
-                                    onClick={() => setSelectedOrder(order)}
+                                    onClick={() => {
+                                      const fullOrder = allOrders.find(o => o.id === order.id);
+                                      setSelectedOrder(fullOrder || order);
+                                    }}
                                   >
                                     {t('view') || 'View'}
                                   </button>
@@ -900,21 +903,22 @@ const OrderDetailsModal = ({ order, onClose, onStatusChange, t }) => {
             <h3>{t('orderInformation') || 'Order Information'}</h3>
             <p><strong>{t('orderNumber') || 'Order Number'}:</strong> {order.orderNumber || order.id}</p>
             <p><strong>{t('status') || 'Status'}:</strong> {order.status || 'Pending'}</p>
-            <p><strong>{t('date') || 'Date'}:</strong> {order.date || order.createdAt ? new Date(order.createdAt).toLocaleDateString() : '-'}</p>
+            <p><strong>{t('orderDate') || 'Date'}:</strong> {order.createdAt ? new Date(order.createdAt).toLocaleString() : (order.date || '-')}</p>
             <p><strong>{t('paymentMethod') || 'Payment Method'}:</strong> {order.paymentMethod || '-'}</p>
+            <p><strong>{t('totalAmount') || 'Total'}:</strong> €{Number(order.amount ?? order.total ?? 0).toFixed(2)}</p>
           </div>
 
           <div className="order-detail-section">
             <h3>{t('customerInformation') || 'Customer Information'}</h3>
-            <p><strong>{t('name') || 'Name'}:</strong> {order.customer || `${order.firstName || ''} ${order.lastName || ''}`.trim() || order.email}</p>
-            <p><strong>{t('email') || 'Email'}:</strong> {order.email}</p>
+            <p><strong>{t('name') || 'Name'}:</strong> {order.customer || [order.firstName, order.lastName].filter(Boolean).join(' ') || order.email || '-'}</p>
+            <p><strong>{t('email') || 'Email'}:</strong> {order.email || '-'}</p>
             <p><strong>{t('phone') || 'Phone'}:</strong> {order.phone || '-'}</p>
           </div>
 
           <div className="order-detail-section">
             <h3>{t('shippingAddress') || 'Shipping Address'}</h3>
             <p>{order.address || '-'}</p>
-            <p>{order.city || ''} {order.postalCode || ''}</p>
+            <p>{[order.city, order.postalCode].filter(Boolean).join(' ') || '-'}</p>
             <p>{order.country || '-'}</p>
           </div>
         </div>
