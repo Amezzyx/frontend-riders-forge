@@ -73,6 +73,7 @@
   margin-bottom: 32px;
   padding-bottom: 24px;
   border-bottom: 2px solid #f0f0f0;
+  text-align: center;
 }
 
 .graphics-form-header h2 {
@@ -88,6 +89,9 @@
   margin: 0;
   font-size: 15px;
   line-height: 1.5;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Form blocks (fieldsets) */
