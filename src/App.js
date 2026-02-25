@@ -162,7 +162,7 @@ const sampleProducts = [
 
 function App() {
   const [cart, setCart] = useState([]);
-  const [, setIsCartOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState([]);
 
   // Load products from backend on mount
@@ -324,6 +324,7 @@ function App() {
         <Footer />
 
         <ShoppingCart
+          isOpen={isCartOpen}
           cart={cart}
           products={products}
           onClose={() => setIsCartOpen(false)}
