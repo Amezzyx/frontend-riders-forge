@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useAlert } from '../context/AlertContext';
 import api from '../services/api';
 import './AdminDashboard.css';
 
@@ -9,6 +10,7 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user, isAdmin } = useAuth();
   const { t } = useLanguage();
+  const { showAlert } = useAlert();
   const [activeSection, setActiveSection] = useState('overview');
   const [stats, setStats] = useState(null);
   const [orders, setOrders] = useState([]);
@@ -73,7 +75,7 @@ const AdminDashboard = () => {
       await loadDashboardData();
     } catch (err) {
       console.error('Failed to update order status:', err);
-      alert(t('updateStatusError') || 'Failed to update order status');
+      showAlert(t('updateStatusError') || 'Failed to update order status', 'error');
     }
   };
 
@@ -442,7 +444,7 @@ const AdminDashboard = () => {
                                         await api.deleteProduct(product.id);
                                         await loadDashboardData();
                                       } catch (err) {
-                                        alert(t('deleteProductError') || 'Failed to delete product');
+                                        showAlert(t('deleteProductError') || 'Failed to delete product', 'error');
                                       }
                                     }
                                   }}
@@ -538,7 +540,7 @@ const AdminDashboard = () => {
                         <tbody>
                           {graphicsRequests.map(request => (
                             <tr key={request.id}>
-                              <td>{request.fullName}</td>
+                              <td>{request.name || request.fullName}</td>
                               <td>{request.email}</td>
                               <td>{request.bikeModel}</td>
                               <td>
@@ -1011,44 +1013,60 @@ const RequestDetailsModal = ({ request, type, onClose, t }) => {
       <div className="request-modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="request-modal-close" onClick={onClose}>×</button>
         <h2>{type === 'contact' ? t('contactRequestDetails') || 'Contact Request Details' : t('graphicsRequestDetails') || 'Graphics Request Details'}</h2>
-        
+
         <div className="request-details-grid">
           <div className="request-detail-section">
             <h3>{t('contactInformation') || 'Contact Information'}</h3>
-            <p><strong>{t('name') || 'Name'}:</strong> {request.name || request.fullName}</p>
-            <p><strong>{t('email') || 'Email'}:</strong> {request.email}</p>
-            {request.phone && <p><strong>{t('phone') || 'Phone'}:</strong> {request.phone}</p>}
+            <p><strong>{t('name') || 'Name'}:</strong> {request.name || request.fullName || '-'}</p>
+            <p><strong>{t('email') || 'Email'}:</strong> {request.email || '-'}</p>
+            <p><strong>{t('phone') || 'Phone'}:</strong> {request.phone || '-'}</p>
           </div>
 
           {type === 'contact' ? (
-            <div className="request-detail-section">
-              <h3>{t('messageDetails') || 'Message Details'}</h3>
-              <p><strong>{t('subject') || 'Subject'}:</strong> {request.subject}</p>
-              <div className="message-content">
-                <p>{request.message}</p>
+            <>
+              <div className="request-detail-section">
+                <h3>{t('status') || 'Status'}</h3>
+                <p><span className={`status-badge status-${(request.status || 'pending').toLowerCase()}`}>{request.status || 'Pending'}</span></p>
               </div>
-            </div>
+              <div className="request-detail-section">
+                <h3>{t('date') || 'Date'}</h3>
+                <p>{request.createdAt ? new Date(request.createdAt).toLocaleString() : '-'}</p>
+              </div>
+              <div className="request-detail-section full-width">
+                <h3>{t('messageDetails') || 'Message Details'}</h3>
+                <p><strong>{t('subject') || 'Subject'}:</strong> {request.subject}</p>
+                <div className="message-content">
+                  <p>{request.message}</p>
+                </div>
+              </div>
+            </>
           ) : (
             <>
               <div className="request-detail-section">
+                <h3>{t('status') || 'Status'}</h3>
+                <p><span className={`status-badge status-${(request.status || 'pending').toLowerCase()}`}>{request.status || 'Pending'}</span></p>
+              </div>
+              <div className="request-detail-section">
+                <h3>{t('date') || 'Date'}</h3>
+                <p>{request.createdAt ? new Date(request.createdAt).toLocaleString() : '-'}</p>
+              </div>
+              <div className="request-detail-section">
                 <h3>{t('bikeInformation') || 'Bike Information'}</h3>
-                <p><strong>{t('bikeModel') || 'Bike Model'}:</strong> {request.bikeModel}</p>
-                <p><strong>{t('bikeYear') || 'Bike Year'}:</strong> {request.bikeYear}</p>
+                <p><strong>{t('bikeModel') || 'Bike Model'}:</strong> {request.bikeModel || '-'}</p>
+                <p><strong>{t('bikeYear') || 'Bike Year'}:</strong> {request.bikeYear || '-'}</p>
               </div>
               <div className="request-detail-section">
                 <h3>{t('projectDetails') || 'Project Details'}</h3>
-                <p><strong>{t('designType') || 'Design Type'}:</strong> {request.designType}</p>
-                <p><strong>{t('budgetRange') || 'Budget Range'}:</strong> {request.budgetRange}</p>
-                <p><strong>{t('timeline') || 'Timeline'}:</strong> {request.timeline}</p>
+                <p><strong>{t('designType') || 'Design Type'}:</strong> {request.designType || '-'}</p>
+                <p><strong>{t('budgetRange') || 'Budget'}:</strong> {request.budget || request.budgetRange || '-'}</p>
+                <p><strong>{t('timeline') || 'Timeline'}:</strong> {request.timeline || '-'}</p>
               </div>
-              {request.designDescription && (
-                <div className="request-detail-section full-width">
-                  <h3>{t('designDescription') || 'Design Description'}</h3>
-                  <div className="message-content">
-                    <p>{request.designDescription}</p>
-                  </div>
+              <div className="request-detail-section full-width">
+                <h3>{t('designDescription') || 'Design Description'}</h3>
+                <div className="message-content">
+                  <p>{request.designDescription || '-'}</p>
                 </div>
-              )}
+              </div>
             </>
           )}
         </div>

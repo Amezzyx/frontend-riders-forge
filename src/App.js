@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useLanguage } from './context/LanguageContext';
+import { useAlert } from './context/AlertContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ShoppingCart from './components/ShoppingCart';
@@ -21,6 +23,7 @@ import Refund from './pages/Refund';
 import Payment from './pages/Payment';
 import Returns from './pages/Returns';
 import Shipping from './pages/Shipping';
+import Graphics from './pages/Graphics';
 import SearchPage from './pages/SearchPage';
 import Menu from './pages/Menu';
 import OrderSuccess from './pages/OrderSuccess';
@@ -161,6 +164,8 @@ const sampleProducts = [
 ];
 
 function App() {
+  const { t } = useLanguage();
+  const { showAlert } = useAlert();
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [products, setProducts] = useState([]);
@@ -200,7 +205,7 @@ function App() {
     const inCart = getCartQuantityForProductSize(product.id, size);
     const available = stock - inCart;
     if (available <= 0) {
-      alert('No more in stock for this size.');
+      showAlert(t('noMoreInStockForSize') || 'No more in stock for this size.', 'info');
       return;
     }
 
@@ -315,6 +320,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/returns" element={<Returns />} />
           <Route path="/shipping" element={<Shipping />} />
+          <Route path="/graphics" element={<Graphics />} />
           <Route path="/search" element={<SearchPage products={products} onAddToCart={handleAddToCart} />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/order-success" element={<OrderSuccess />} />

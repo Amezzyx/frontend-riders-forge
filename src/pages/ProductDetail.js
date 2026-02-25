@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
+import { useAlert } from '../context/AlertContext';
 import './ProductDetail.css';
 
 const ProductDetail = ({ products, cart = [], onAddToCart }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const product = products.find(p => p.id === parseInt(id));
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || null);
   const [quantity, setQuantity] = useState(1);
@@ -13,27 +16,29 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
   if (!product) {
     return (
       <div className="product-detail-error">
-        <h2>Product not found</h2>
-        <button onClick={() => navigate('/')}>Go to Home</button>
+        <h2>{t('productNotFound') || 'Product not found'}</h2>
+        <button onClick={() => navigate('/')}>{t('goToHome') || 'Go to Home'}</button>
       </div>
     );
   }
 
   const handleAddToCart = () => {
     if (product.sizes?.length > 0 && !selectedSize) {
-      alert('Please select a size');
+      showAlert(t('pleaseSelectSize') || 'Please select a size', 'info');
       return;
     }
     
-    // Check if selected size is out of stock
     if (selectedSize && isSizeOutOfStock(selectedSize)) {
-      alert('This size is out of stock');
+      showAlert(t('thisSizeOutOfStock') || 'This size is out of stock', 'info');
       return;
     }
     
-    // Don't add more than available (stock minus already in cart)
     if (quantity > availableToAdd) {
-      alert(`Only ${availableToAdd} more available for this size (${selectedSizeStock} in stock, ${inCartForSelectedSize} in cart).`);
+      const msg = t('onlyXMoreAvailable')
+        ?.replace('{available}', availableToAdd)
+        ?.replace('{stock}', selectedSizeStock)
+        ?.replace('{inCart}', inCartForSelectedSize);
+      showAlert(msg || `Only ${availableToAdd} more available for this size (${selectedSizeStock} in stock, ${inCartForSelectedSize} in cart).`, 'info');
       return;
     }
     
@@ -87,7 +92,7 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
     <div className={`product-detail ${isOutOfStock ? 'out-of-stock' : ''}`}>
       <div className="container">
         <button className="back-button" onClick={() => navigate(-1)}>
-          ← Back
+          ← {t('back') || 'Back'}
         </button>
         
         <div className="product-detail-content">
@@ -105,11 +110,11 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
                 </div>
               )}
               {isOutOfStock ? (
-                <span className="badge out-of-stock-badge">Out of Stock</span>
+                <span className="badge out-of-stock-badge">{t('outOfStock') || 'Out of Stock'}</span>
               ) : discount ? (
                 <span className="badge discount">-{discount}%</span>
               ) : product.isNew ? (
-                <span className="badge new">New</span>
+                <span className="badge new">{t('new') || 'New'}</span>
               ) : null}
             </div>
           </div>
@@ -123,14 +128,14 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
               {product.regularPrice && (
                 <>
                   <span className="regular-price">€{Number(product.regularPrice || 0).toFixed(2)}</span>
-                  <span className="savings">Save €{(Number(product.regularPrice || 0) - Number(product.price || 0)).toFixed(2)}</span>
+                  <span className="savings">{t('saveAmount')?.replace('{amount}', (Number(product.regularPrice || 0) - Number(product.price || 0)).toFixed(2)) || `Save €${(Number(product.regularPrice || 0) - Number(product.price || 0)).toFixed(2)}`}</span>
                 </>
               )}
             </div>
 
             {product.sizes && product.sizes.length > 0 && (
               <div className="size-selection">
-                <label>Size:</label>
+                <label>{t('size') || 'Size'}:</label>
                 <div className="size-options">
                   {product.sizes.map(size => {
                     const sizeStock = getSizeStock(size);
@@ -146,7 +151,7 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
                           }
                         }}
                         disabled={sizeOutOfStock}
-                        title={sizeOutOfStock ? 'Out of Stock' : `${sizeStock} in stock`}
+                        title={sizeOutOfStock ? (t('outOfStock') || 'Out of Stock') : `${sizeStock} ${t('inStock') || 'in stock'}`}
                       >
                         {size}
                         {sizeOutOfStock && <span className="size-out-of-stock-indicator">×</span>}
@@ -159,7 +164,7 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
 
             {!isOutOfStock && !selectedSizeOutOfStock && availableToAdd > 0 && (
               <div className="quantity-selection">
-                <label>Quantity:</label>
+                <label>{t('quantity') || 'Quantity'}:</label>
                 <div className="quantity-controls">
                   <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
                   <span>{quantity}</span>
@@ -167,7 +172,7 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
                 </div>
                 {selectedSize && (
                   <small style={{ color: '#666', fontSize: '12px', marginTop: '5px', display: 'block' }}>
-                    {availableToAdd} available to add{inCartForSelectedSize > 0 ? ` (${inCartForSelectedSize} already in cart)` : ''} in {selectedSize}
+                    {availableToAdd} {(t('availableToAdd') || 'available to add')}{inCartForSelectedSize > 0 ? ` (${inCartForSelectedSize} ${t('alreadyInCart') || 'already in cart'})` : ''} {t('inSize') || 'in'} {selectedSize}
                   </small>
                 )}
               </div>
@@ -178,11 +183,11 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
               onClick={handleAddToCart}
               disabled={isOutOfStock || selectedSizeOutOfStock || availableToAdd <= 0}
             >
-              {(isOutOfStock || selectedSizeOutOfStock) ? 'Out of Stock' : availableToAdd <= 0 ? 'All in cart' : (addedToCart ? '✓ Added to Cart!' : 'Add to Cart')}
+              {(isOutOfStock || selectedSizeOutOfStock) ? (t('outOfStock') || 'Out of Stock') : availableToAdd <= 0 ? (t('allInCart') || 'All in cart') : (addedToCart ? `✓ ${t('addedToCart') || 'Added to Cart!'}` : (t('addToCart') || 'Add to Cart'))}
             </button>
 
             <div className="product-description">
-              <h3>Description</h3>
+              <h3>{t('description') || 'Description'}</h3>
               <p>
                 Premium quality {product.name.toLowerCase()} from our {product.category} collection. 
                 Made with high-quality materials and attention to detail. Perfect for everyday wear 
@@ -197,8 +202,8 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
             </div>
 
             <div className="shipping-info">
-              <h3>Shipping & Returns</h3>
-              <p>Free shipping on orders over €50. Easy returns within 30 days.</p>
+              <h3>{t('shippingReturns') || 'Shipping & Returns'}</h3>
+              <p>{t('shippingReturnsText') || 'Free shipping on orders over €50. Easy returns within 30 days.'}</p>
             </div>
           </div>
         </div>

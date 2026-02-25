@@ -146,12 +146,14 @@ const translations = {
     // Cart Page
     shoppingCart: 'Shopping Cart',
     yourCartIsEmpty: 'Your cart is empty',
+    returnToCart: 'Return to Cart',
     pleaseFillAllFields: 'Please fill in all required fields.',
     startShopping: 'Start shopping to add items to your cart',
     orderSummary: 'Order Summary',
     itemSubtotal: 'Item Subtotal',
     freeShippingAt: 'Add {amount} more for free shipping',
     freeShippingNote: 'You qualify for free shipping!',
+    maximumInStock: 'Maximum in stock',
     
     // Checkout Page
     checkout: 'Checkout',
@@ -171,6 +173,8 @@ const translations = {
     postalCode: 'Postal Code',
     country: 'Country',
     placeOrder: 'Place Order',
+    placeOrderError: 'Failed to place order. Please try again.',
+    placingOrder: 'Placing Order...',
     processing: 'Processing...',
     
     // Product Detail
@@ -192,6 +196,19 @@ const translations = {
     submit: 'Submit',
     close: 'Close',
     outOfStock: 'Out of Stock',
+    allInCart: 'All in cart',
+    availableToAdd: 'available to add',
+    alreadyInCart: 'already in cart',
+    inSize: 'in',
+    thisSizeOutOfStock: 'This size is out of stock',
+    noMoreInStockForSize: 'No more in stock for this size.',
+    onlyXMoreAvailable: 'Only {available} more available for this size ({stock} in stock, {inCart} in cart).',
+    notSpecified: 'Not specified',
+    backToAccount: 'Back to Account',
+    loadingOrderDetails: 'Loading order details...',
+    orderNotFound: 'Order not found',
+    noPermissionViewOrder: 'You do not have permission to view this order.',
+    failedToLoadOrder: 'Failed to load order details.',
     
     // Account
     myAccount: 'My Account',
@@ -730,12 +747,14 @@ const translations = {
     // Cart Page
     shoppingCart: 'Nákupný košík',
     yourCartIsEmpty: 'Váš košík je prázdny',
+    returnToCart: 'Späť do košíka',
     pleaseFillAllFields: 'Prosím vyplňte všetky povinné polia.',
     startShopping: 'Začnite nakupovať a pridajte položky do košíka',
     orderSummary: 'Súhrn objednávky',
     itemSubtotal: 'Medzisúčet položky',
     freeShippingAt: 'Pridajte ešte {amount} pre bezplatnú dopravu',
     freeShippingNote: 'Máte nárok na bezplatnú dopravu!',
+    maximumInStock: 'Maximum na sklade',
     
     // Checkout Page
     checkout: 'Pokladňa',
@@ -755,6 +774,8 @@ const translations = {
     postalCode: 'PSČ',
     country: 'Krajina',
     placeOrder: 'Objednať',
+    placeOrderError: 'Objednávku sa nepodarilo odoslať. Skúste to znova.',
+    placingOrder: 'Vytváram objednávku...',
     processing: 'Spracováva sa...',
     
     // Product Detail
@@ -776,6 +797,19 @@ const translations = {
     submit: 'Odoslať',
     close: 'Zatvoriť',
     outOfStock: 'Vypredané',
+    allInCart: 'Všetko v košíku',
+    availableToAdd: 'dostupných na pridanie',
+    alreadyInCart: 'už v košíku',
+    inSize: 'veľkosť',
+    thisSizeOutOfStock: 'Táto veľkosť je vypredaná',
+    noMoreInStockForSize: 'Na túto veľkosť už nie je skladom.',
+    onlyXMoreAvailable: 'Na túto veľkosť môžete pridať ešte {available} ks ({stock} na sklade, {inCart} v košíku).',
+    notSpecified: 'Neurčené',
+    backToAccount: 'Späť na účet',
+    loadingOrderDetails: 'Načítavanie detailov objednávky...',
+    orderNotFound: 'Objednávka sa nenašla',
+    noPermissionViewOrder: 'Nemáte oprávnenie zobraziť túto objednávku.',
+    failedToLoadOrder: 'Nepodarilo sa načítať detaily objednávky.',
     
     // Account
     myAccount: 'Môj účet',

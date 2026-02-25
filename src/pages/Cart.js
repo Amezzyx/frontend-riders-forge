@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import './Cart.css';
 
 const getStockForItem = (products, item) => {
@@ -13,6 +14,7 @@ const getStockForItem = (products, item) => {
 
 const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const total = cart.reduce((sum, item) => {
     const price = typeof item.price === 'string' ? parseFloat(item.price) : Number(item.price || 0);
     return sum + (price * item.quantity);
@@ -23,7 +25,7 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
   return (
     <div className="cart-page">
       <div className="container">
-        <h1>Shopping Cart</h1>
+        <h1>{t('shoppingCart') || 'Shopping Cart'}</h1>
         
         {cart.length === 0 ? (
           <div className="empty-cart-state">
@@ -32,10 +34,10 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
               <circle cx="20" cy="21" r="1"></circle>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
-            <h2>Your cart is empty</h2>
-            <p>Start shopping to add items to your cart</p>
+            <h2>{t('yourCartIsEmpty') || 'Your cart is empty'}</h2>
+            <p>{t('startShopping') || 'Start shopping to add items to your cart'}</p>
             <button className="shop-now-btn" onClick={() => navigate('/')}>
-              Continue Shopping
+              {t('continueShopping') || 'Continue Shopping'}
             </button>
           </div>
         ) : (
@@ -52,7 +54,7 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
                   </div>
                   <div className="cart-item-details">
                     <h3 onClick={() => navigate(`/product/${item.id}`)}>{item.name}</h3>
-                    {item.size && <p className="item-size">Size: {item.size}</p>}
+                    {item.size && <p className="item-size">{t('size') || 'Size'}: {item.size}</p>}
                     <p className="item-price">€{Number(item.price || 0).toFixed(2)}</p>
                   </div>
                   <div className="cart-item-controls">
@@ -67,7 +69,7 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
                       <button 
                         onClick={() => onUpdateQuantity(index, item.quantity + 1)}
                         disabled={item.quantity >= getStockForItem(products, item)}
-                        title={item.quantity >= getStockForItem(products, item) ? 'Maximum in stock' : ''}
+                        title={item.quantity >= getStockForItem(products, item) ? (t('maximumInStock') || 'Maximum in stock') : ''}
                       >
                         +
                       </button>
@@ -78,9 +80,9 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
                     <button 
                       className="remove-btn"
                       onClick={() => onRemoveItem(index)}
-                      aria-label="Remove item"
+                      aria-label={t('remove') || 'Remove'}
                     >
-                      Remove
+                      {t('remove') || 'Remove'}
                     </button>
                   </div>
                 </div>
@@ -88,16 +90,16 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
             </div>
 
             <div className="cart-summary">
-              <h2>Order Summary</h2>
+              <h2>{t('orderSummary') || 'Order Summary'}</h2>
               <div className="summary-row">
-                <span>Subtotal</span>
+                <span>{t('subtotal') || 'Subtotal'}</span>
                 <span>€{total.toFixed(2)}</span>
               </div>
               <div className="summary-row">
-                <span>Shipping</span>
+                <span>{t('shipping') || 'Shipping'}</span>
                 <span>
                   {shipping === 0 ? (
-                    <span className="free-shipping">Free</span>
+                    <span className="free-shipping">{t('free') || 'Free'}</span>
                   ) : (
                     `€${shipping.toFixed(2)}`
                   )}
@@ -105,24 +107,24 @@ const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
               </div>
               {total < 50 && (
                 <div className="shipping-note">
-                  Add €{(50 - total).toFixed(2)} more for free shipping!
+                  {t('freeShippingAt')?.replace('{amount}', `€${(50 - total).toFixed(2)}`) || `Add €${(50 - total).toFixed(2)} more for free shipping!`}
                 </div>
               )}
               <div className="summary-row total-row">
-                <span>Total</span>
+                <span>{t('total') || 'Total'}</span>
                 <span>€{finalTotal.toFixed(2)}</span>
               </div>
               <button 
                 className="checkout-btn"
                 onClick={() => navigate('/checkout')}
               >
-                Proceed to Checkout
+                {t('proceedToCheckout') || 'Proceed to Checkout'}
               </button>
               <button 
                 className="continue-shopping-btn"
                 onClick={() => navigate('/')}
               >
-                Continue Shopping
+                {t('continueShopping') || 'Continue Shopping'}
               </button>
             </div>
           </div>

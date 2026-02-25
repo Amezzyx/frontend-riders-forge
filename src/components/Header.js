@@ -86,7 +86,7 @@ const Header = ({ cartCount, onCartClick }) => {
                   onMouseEnter={() => setActiveCategory(category)}
                   onMouseLeave={() => setActiveCategory(null)}
                 >
-                  <Link to={`/category/${category.toLowerCase().replace(' ', '-')}`}>
+                  <Link to={category === 'Graphics' ? '/graphics' : `/category/${category.toLowerCase().replace(' ', '-')}`}>
                     {categoryTranslations[category] || category}
                   </Link>
                   {activeCategory === category && categories[category].length > 0 && (

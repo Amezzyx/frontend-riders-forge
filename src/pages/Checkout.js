@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import './Checkout.css';
-
-// ESLint cache fix
 
 const Checkout = ({ cart, onOrderPlaced }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -122,7 +122,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
       navigate('/order-success', { state: { orderId: order.orderNumber || order.id } });
     } catch (err) {
       console.error('Order creation failed:', err);
-      setError(err.message || 'Failed to place order. Please try again.');
+      setError(err.message || (t('placeOrderError') || 'Failed to place order. Please try again.'));
       setIsSubmitting(false);
     }
   };
@@ -130,8 +130,8 @@ const Checkout = ({ cart, onOrderPlaced }) => {
   if (cart.length === 0) {
     return (
       <div className="checkout-empty">
-        <h2>Your cart is empty</h2>
-        <button onClick={() => navigate('/cart')}>Return to Cart</button>
+        <h2>{t('yourCartIsEmpty') || 'Your cart is empty'}</h2>
+        <button onClick={() => navigate('/cart')}>{t('returnToCart') || 'Return to Cart'}</button>
       </div>
     );
   }
@@ -139,7 +139,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
   return (
     <div className="checkout-page">
       <div className="container">
-        <h1>Checkout</h1>
+        <h1>{t('checkout') || 'Checkout'}</h1>
         
         {error && (
           <div className="error-message" style={{ color: 'red', marginBottom: '20px', padding: '15px', background: '#ffe6e6', borderRadius: '4px' }}>
@@ -151,9 +151,9 @@ const Checkout = ({ cart, onOrderPlaced }) => {
           <div className="checkout-layout">
             <div className="checkout-main">
               <section className="checkout-section">
-                <h2>Contact Information</h2>
+                <h2>{t('contactInformation') || 'Contact Information'}</h2>
                 <div className="form-group">
-                  <label>Email *</label>
+                  <label>{t('emailLabel') || 'Email'} *</label>
                   <input
                     type="email"
                     name="email"
@@ -163,7 +163,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Phone</label>
+                  <label>{t('phone') || 'Phone'}</label>
                   <input
                     type="tel"
                     name="phone"
@@ -174,10 +174,10 @@ const Checkout = ({ cart, onOrderPlaced }) => {
               </section>
 
               <section className="checkout-section">
-                <h2>Shipping Address</h2>
+                <h2>{t('shippingAddress') || 'Shipping Address'}</h2>
                 <div className="form-row">
                   <div className="form-group">
-                    <label>First Name *</label>
+                    <label>{t('firstName') || 'First Name'} *</label>
                     <input
                       type="text"
                       name="firstName"
@@ -187,7 +187,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Last Name *</label>
+                    <label>{t('lastName') || 'Last Name'} *</label>
                     <input
                       type="text"
                       name="lastName"
@@ -198,7 +198,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>Address *</label>
+                  <label>{t('address') || 'Address'} *</label>
                   <input
                     type="text"
                     name="address"
@@ -209,7 +209,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                 </div>
                 <div className="form-row">
                   <div className="form-group">
-                    <label>City *</label>
+                    <label>{t('city') || 'City'} *</label>
                     <input
                       type="text"
                       name="city"
@@ -219,7 +219,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Postal Code *</label>
+                    <label>{t('postalCode') || 'Postal Code'} *</label>
                     <input
                       type="text"
                       name="postalCode"
@@ -230,7 +230,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>Country *</label>
+                  <label>{t('country') || 'Country'} *</label>
                   <select
                     name="country"
                     value={formData.country}
@@ -247,7 +247,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
               </section>
 
               <section className="checkout-section">
-                <h2>Payment Method</h2>
+                <h2>{t('paymentMethod') || 'Payment Method'}</h2>
                 <div className="payment-methods">
                   <label className={`payment-option ${formData.paymentMethod === 'card' ? 'checked' : ''}`}>
                     <input
@@ -257,7 +257,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                       checked={formData.paymentMethod === 'card'}
                       onChange={handleInputChange}
                     />
-                    <span>Credit/Debit Card</span>
+                    <span>{t('creditDebitCard') || 'Credit/Debit Card'}</span>
                   </label>
                   <label className={`payment-option ${formData.paymentMethod === 'paypal' ? 'checked' : ''}`}>
                     <input
@@ -267,7 +267,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                       checked={formData.paymentMethod === 'paypal'}
                       onChange={handleInputChange}
                     />
-                    <span>PayPal</span>
+                    <span>{t('paypal') || 'PayPal'}</span>
                   </label>
                   <label className={`payment-option ${formData.paymentMethod === 'bank' ? 'checked' : ''}`}>
                     <input
@@ -277,7 +277,7 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                       checked={formData.paymentMethod === 'bank'}
                       onChange={handleInputChange}
                     />
-                    <span>Bank Transfer</span>
+                    <span>{t('bankTransfer') || 'Bank Transfer'}</span>
                   </label>
                 </div>
               </section>
@@ -285,14 +285,14 @@ const Checkout = ({ cart, onOrderPlaced }) => {
 
             <div className="checkout-sidebar">
               <div className="order-summary">
-                <h2>Order Summary</h2>
+                <h2>{t('orderSummary') || 'Order Summary'}</h2>
                 <div className="order-items">
                   {cart.map((item, index) => (
                     <div key={index} className="order-item">
                       <div className="order-item-info">
                         <span className="order-item-name">{item.name}</span>
-                        {item.size && <span className="order-item-size">Size: {item.size}</span>}
-                        <span className="order-item-quantity">Qty: {item.quantity}</span>
+                        {item.size && <span className="order-item-size">{t('size') || 'Size'}: {item.size}</span>}
+                        <span className="order-item-quantity">{t('quantity') || 'Qty'}: {item.quantity}</span>
                       </div>
                       <span className="order-item-price">€{(item.price * item.quantity).toFixed(2)}</span>
                     </div>
@@ -300,20 +300,20 @@ const Checkout = ({ cart, onOrderPlaced }) => {
                 </div>
                 <div className="order-totals">
                   <div className="total-row">
-                    <span>Subtotal</span>
+                    <span>{t('subtotal') || 'Subtotal'}</span>
                     <span>€{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="total-row">
-                    <span>Shipping</span>
-                    <span>{shipping === 0 ? 'Free' : `€${shipping.toFixed(2)}`}</span>
+                    <span>{t('shipping') || 'Shipping'}</span>
+                    <span>{shipping === 0 ? (t('free') || 'Free') : `€${shipping.toFixed(2)}`}</span>
                   </div>
                   <div className="total-row final-total">
-                    <span>Total</span>
+                    <span>{t('total') || 'Total'}</span>
                     <span>€{total.toFixed(2)}</span>
                   </div>
                 </div>
                 <button type="submit" className="place-order-btn" disabled={isSubmitting}>
-                  {isSubmitting ? 'Placing Order...' : 'Place Order'}
+                  {isSubmitting ? (t('placingOrder') || 'Placing Order...') : (t('placeOrder') || 'Place Order')}
                 </button>
               </div>
             </div>

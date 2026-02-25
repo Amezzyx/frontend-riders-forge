@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { AlertProvider } from './context/AlertContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <LanguageProvider>
       <AuthProvider>
-        <App />
+        <AlertProvider>
+          <App />
+        </AlertProvider>
       </AuthProvider>
     </LanguageProvider>
   </React.StrictMode>

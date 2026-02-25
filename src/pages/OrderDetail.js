@@ -29,7 +29,7 @@ const OrderDetail = () => {
         
         // Verify the order belongs to the current user
         if (orderData.userId && orderData.userId !== user.id) {
-          setError('You do not have permission to view this order.');
+          setError(t('noPermissionViewOrder') || 'You do not have permission to view this order.');
           setLoading(false);
           return;
         }
@@ -37,7 +37,7 @@ const OrderDetail = () => {
         setOrder(orderData);
       } catch (err) {
         console.error('Failed to load order:', err);
-        setError(err.message || 'Failed to load order details.');
+        setError(err.message || (t('failedToLoadOrder') || 'Failed to load order details.'));
       } finally {
         setLoading(false);
       }
@@ -50,7 +50,7 @@ const OrderDetail = () => {
     return (
       <div className="order-detail-page">
         <div className="container">
-          <p>Loading order details...</p>
+          <p>{t('loadingOrderDetails') || 'Loading order details...'}</p>
         </div>
       </div>
     );
@@ -61,9 +61,9 @@ const OrderDetail = () => {
       <div className="order-detail-page">
         <div className="container">
           <div className="error-message">
-            <h2>{error || 'Order not found'}</h2>
+            <h2>{error || (t('orderNotFound') || 'Order not found')}</h2>
             <button onClick={() => navigate('/account')} className="back-btn">
-              Back to Account
+              {t('backToAccount') || 'Back to Account'}
             </button>
           </div>
         </div>
@@ -74,11 +74,11 @@ const OrderDetail = () => {
   const total = typeof order.total === 'string' ? parseFloat(order.total) : (order.total || 0);
 
   const formatPaymentMethod = (method) => {
-    if (!method) return 'Not specified';
+    if (!method) return t('notSpecified') || 'Not specified';
     const methodMap = {
-      'card': 'Card',
-      'paypal': 'PayPal',
-      'bank': 'Bank Transfer'
+      'card': t('creditDebitCard') || 'Card',
+      'paypal': t('paypal') || 'PayPal',
+      'bank': t('bankTransfer') || 'Bank Transfer'
     };
     return methodMap[method.toLowerCase()] || method.charAt(0).toUpperCase() + method.slice(1);
   };
@@ -87,7 +87,7 @@ const OrderDetail = () => {
     <div className="order-detail-page">
       <div className="container">
         <button className="back-button" onClick={() => navigate('/account')}>
-          ← Back to Account
+          ← {t('backToAccount') || 'Back to Account'}
         </button>
 
         <div className="order-detail-header">
