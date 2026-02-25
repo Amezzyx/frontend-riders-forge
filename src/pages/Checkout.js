@@ -22,23 +22,42 @@ const Checkout = ({ cart, onOrderPlaced }) => {
   });
   const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-  // Load user data if logged in
+  // Load user data if logged in: use saved address (default or first) to auto-fill checkout
   useEffect(() => {
     const loadUserData = async () => {
       if (user?.id && !userDataLoaded) {
         try {
           const userData = await api.getUser(user.id);
-          setFormData(prev => ({
-            ...prev,
-            email: userData.email || prev.email,
-            firstName: userData.firstName || prev.firstName,
-            lastName: userData.lastName || prev.lastName,
-            phone: userData.phone || prev.phone,
-            address: userData.address || prev.address,
-            city: userData.city || prev.city,
-            postalCode: userData.postalCode || prev.postalCode,
-            country: userData.country || prev.country,
-          }));
+          const savedAddresses = userData.addresses || [];
+          const addressToUse = savedAddresses.length > 0
+            ? (savedAddresses.find(a => a.isDefault) || savedAddresses[0])
+            : null;
+
+          if (addressToUse) {
+            setFormData(prev => ({
+              ...prev,
+              email: userData.email || prev.email,
+              firstName: addressToUse.firstName || prev.firstName,
+              lastName: addressToUse.lastName || prev.lastName,
+              phone: addressToUse.phone || userData.phone || prev.phone,
+              address: addressToUse.address || prev.address,
+              city: addressToUse.city || prev.city,
+              postalCode: addressToUse.postalCode || prev.postalCode,
+              country: addressToUse.country || prev.country,
+            }));
+          } else {
+            setFormData(prev => ({
+              ...prev,
+              email: userData.email || prev.email,
+              firstName: userData.firstName || prev.firstName,
+              lastName: userData.lastName || prev.lastName,
+              phone: userData.phone || prev.phone,
+              address: userData.address || prev.address,
+              city: userData.city || prev.city,
+              postalCode: userData.postalCode || prev.postalCode,
+              country: userData.country || prev.country,
+            }));
+          }
           setUserDataLoaded(true);
         } catch (err) {
           console.error('Failed to load user data for checkout:', err);
