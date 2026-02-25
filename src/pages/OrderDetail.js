@@ -44,7 +44,7 @@ const OrderDetail = () => {
     };
 
     loadOrder();
-  }, [id, user, navigate]);
+  }, [id, user, navigate, t]);
 
   if (loading) {
     return (
