@@ -62,22 +62,31 @@ const Graphics = () => {
 
   return (
     <div className="graphics-page">
-      <div className="container">
-        <div className="graphics-header">
-          <h1>{t('graphicsTitle') || 'Custom Motorcycle Graphics Design'}</h1>
-          <p>{t('graphicsSubtitle') || 'Transform your bike with personalized graphics designed just for you'}</p>
+      <div className="graphics-hero">
+        <div className="container">
+          <div className="graphics-header">
+            <span className="graphics-badge">{t('graphics') || 'Graphics'}</span>
+            <h1>{t('graphicsTitle') || 'Custom Motorcycle Graphics Design'}</h1>
+            <p className="graphics-subtitle">{t('graphicsSubtitle') || 'Transform your bike with personalized graphics designed just for you'}</p>
+          </div>
         </div>
+      </div>
 
+      <div className="container graphics-body">
         <div className="graphics-description">
           <p>{t('graphicsDescription') || 'At Riders Forge, we specialize in creating custom motorcycle graphics that reflect your unique style and personality.'}</p>
         </div>
 
         <div className="graphics-form-section">
-          <h2>{t('graphicsFormTitle') || 'Graphics Design Request Form'}</h2>
-          <p className="form-intro">{t('contactUsToday') || 'Contact us today to discuss your custom motorcycle graphics project.'}</p>
+          <div className="graphics-form-header">
+            <h2>{t('graphicsFormTitle') || 'Graphics Design Request Form'}</h2>
+            <p className="form-intro">{t('contactUsToday') || 'Contact us today to discuss your custom motorcycle graphics project.'}</p>
+          </div>
 
           <form onSubmit={handleSubmit} className="graphics-form">
-            <div className="form-row">
+            <fieldset className="form-block">
+              <legend>{t('contactInformation') || 'Contact Information'}</legend>
+              <div className="form-row">
               <div className="form-group">
                 <label>{t('fullName') || 'Full Name'} *</label>
                 <input
@@ -99,10 +108,9 @@ const Graphics = () => {
                   required
                 />
               </div>
-            </div>
-
-            <div className="form-group">
-              <label>{t('phoneNumber') || 'Phone'}</label>
+              </div>
+              <div className="form-group">
+                <label>{t('phoneNumber') || 'Phone'}</label>
               <input
                 type="tel"
                 name="phone"
@@ -111,8 +119,11 @@ const Graphics = () => {
                 placeholder={t('phonePlaceholder') || '+421 912 123 456'}
               />
             </div>
+            </fieldset>
 
-            <div className="form-row">
+            <fieldset className="form-block">
+              <legend>{t('bikeInformation') || 'Bike Information'}</legend>
+              <div className="form-row">
               <div className="form-group">
                 <label>{t('bikeModel') || 'Bike Model'} *</label>
                 <input
@@ -135,7 +146,10 @@ const Graphics = () => {
                 />
               </div>
             </div>
+            </fieldset>
 
+            <fieldset className="form-block">
+              <legend>{t('projectDetails') || 'Project Details'}</legend>
             <div className="form-group">
               <label>{t('designType') || 'Design Type'}</label>
               <select
@@ -152,7 +166,6 @@ const Graphics = () => {
                 <option value="Other">{t('other') || 'Other'}</option>
               </select>
             </div>
-
             <div className="form-group">
               <label>{t('designDescription') || 'Design Description'}</label>
               <textarea
@@ -163,7 +176,6 @@ const Graphics = () => {
                 placeholder={t('designDescriptionPlaceholder') || 'Describe your design ideas, colors, style preferences...'}
               />
             </div>
-
             <div className="form-row">
               <div className="form-group">
                 <label>{t('budgetRange') || 'Budget Range'}</label>
@@ -194,6 +206,7 @@ const Graphics = () => {
                 </select>
               </div>
             </div>
+            </fieldset>
 
             {submitStatus === 'success' && (
               <p className="graphics-form-status success">{t('thankYouMessage') || 'Thank you! We will contact you soon to discuss your motorcycle graphics project.'}</p>
