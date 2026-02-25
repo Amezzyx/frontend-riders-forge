@@ -4,7 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 
 
-const ShoppingCart = ({ cart, isOpen, onClose, onRemoveItem, onUpdateQuantity }) => {
+const getStockForItem = (products, item) => {
+  const product = products?.find(p => p.id === item.id);
+  if (!product) return 0;
+  if (product.sizeQuantities && typeof product.sizeQuantities === 'object' && item.size != null) {
+    return Number(product.sizeQuantities[item.size]) || 0;
+  }
+  return Number(product.quantity) || 0;
+};
+
+const ShoppingCart = ({ cart, products = [], isOpen, onClose, onRemoveItem, onUpdateQuantity }) => {
   const { t } = useLanguage();
   // Convert price strings to numbers (PostgreSQL returns decimals as strings)
   const total = cart.reduce((sum, item) => {
@@ -76,7 +85,10 @@ const ShoppingCart = ({ cart, isOpen, onClose, onRemoveItem, onUpdateQuantity })
                           −
                         </button>
                         <span>{item.quantity}</span>
-                        <button onClick={() => onUpdateQuantity(index, item.quantity + 1)}>
+                        <button 
+                          onClick={() => onUpdateQuantity(index, item.quantity + 1)}
+                          disabled={item.quantity >= getStockForItem(products, item)}
+                        >
                           +
                         </button>
                       </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ProductDetail.css';
 
-const ProductDetail = ({ products, onAddToCart }) => {
+const ProductDetail = ({ products, cart = [], onAddToCart }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const product = products.find(p => p.id === parseInt(id));
@@ -31,13 +31,14 @@ const ProductDetail = ({ products, onAddToCart }) => {
       return;
     }
     
-    // Check if quantity exceeds available stock
-    if (selectedSize && quantity > selectedSizeStock) {
-      alert(`Only ${selectedSizeStock} available in this size`);
+    // Don't add more than available (stock minus already in cart)
+    if (quantity > availableToAdd) {
+      alert(`Only ${availableToAdd} more available for this size (${selectedSizeStock} in stock, ${inCartForSelectedSize} in cart).`);
       return;
     }
     
-    for (let i = 0; i < quantity; i++) {
+    const toAdd = Math.min(quantity, availableToAdd);
+    for (let i = 0; i < toAdd; i++) {
       onAddToCart(product, selectedSize);
     }
     
@@ -77,6 +78,10 @@ const ProductDetail = ({ products, onAddToCart }) => {
   const isOutOfStock = isCompletelyOutOfStock();
   const selectedSizeOutOfStock = selectedSize ? isSizeOutOfStock(selectedSize) : false;
   const selectedSizeStock = selectedSize ? getSizeStock(selectedSize) : 0;
+  const inCartForSelectedSize = cart.filter(
+    item => item.id === product.id && item.size === selectedSize
+  ).reduce((sum, item) => sum + (item.quantity || 0), 0);
+  const availableToAdd = Math.max(0, selectedSizeStock - inCartForSelectedSize);
 
   return (
     <div className={`product-detail ${isOutOfStock ? 'out-of-stock' : ''}`}>
@@ -152,28 +157,28 @@ const ProductDetail = ({ products, onAddToCart }) => {
               </div>
             )}
 
-            {!isOutOfStock && !selectedSizeOutOfStock && (
+            {!isOutOfStock && !selectedSizeOutOfStock && availableToAdd > 0 && (
               <div className="quantity-selection">
                 <label>Quantity:</label>
                 <div className="quantity-controls">
                   <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
                   <span>{quantity}</span>
-                  <button onClick={() => setQuantity(Math.min(selectedSizeStock, quantity + 1))}>+</button>
+                  <button onClick={() => setQuantity(Math.min(availableToAdd, quantity + 1))}>+</button>
                 </div>
-                {selectedSize && selectedSizeStock > 0 && (
+                {selectedSize && (
                   <small style={{ color: '#666', fontSize: '12px', marginTop: '5px', display: 'block' }}>
-                    {selectedSizeStock} available in {selectedSize}
+                    {availableToAdd} available to add{inCartForSelectedSize > 0 ? ` (${inCartForSelectedSize} already in cart)` : ''} in {selectedSize}
                   </small>
                 )}
               </div>
             )}
 
             <button 
-              className={`add-to-cart-btn ${addedToCart ? 'added' : ''} ${(isOutOfStock || selectedSizeOutOfStock) ? 'disabled' : ''}`}
+              className={`add-to-cart-btn ${addedToCart ? 'added' : ''} ${(isOutOfStock || selectedSizeOutOfStock || availableToAdd <= 0) ? 'disabled' : ''}`}
               onClick={handleAddToCart}
-              disabled={isOutOfStock || selectedSizeOutOfStock}
+              disabled={isOutOfStock || selectedSizeOutOfStock || availableToAdd <= 0}
             >
-              {(isOutOfStock || selectedSizeOutOfStock) ? 'Out of Stock' : (addedToCart ? '✓ Added to Cart!' : 'Add to Cart')}
+              {(isOutOfStock || selectedSizeOutOfStock) ? 'Out of Stock' : availableToAdd <= 0 ? 'All in cart' : (addedToCart ? '✓ Added to Cart!' : 'Add to Cart')}
             </button>
 
             <div className="product-description">

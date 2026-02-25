@@ -2,7 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Cart.css';
 
-const Cart = ({ cart, onRemoveItem, onUpdateQuantity }) => {
+const getStockForItem = (products, item) => {
+  const product = products?.find(p => p.id === item.id);
+  if (!product) return 0;
+  if (product.sizeQuantities && typeof product.sizeQuantities === 'object' && item.size != null) {
+    return Number(product.sizeQuantities[item.size]) || 0;
+  }
+  return Number(product.quantity) || 0;
+};
+
+const Cart = ({ cart, products = [], onRemoveItem, onUpdateQuantity }) => {
   const navigate = useNavigate();
   const total = cart.reduce((sum, item) => {
     const price = typeof item.price === 'string' ? parseFloat(item.price) : Number(item.price || 0);
@@ -55,7 +64,11 @@ const Cart = ({ cart, onRemoveItem, onUpdateQuantity }) => {
                         −
                       </button>
                       <span>{item.quantity}</span>
-                      <button onClick={() => onUpdateQuantity(index, item.quantity + 1)}>
+                      <button 
+                        onClick={() => onUpdateQuantity(index, item.quantity + 1)}
+                        disabled={item.quantity >= getStockForItem(products, item)}
+                        title={item.quantity >= getStockForItem(products, item) ? 'Maximum in stock' : ''}
+                      >
                         +
                       </button>
                     </div>

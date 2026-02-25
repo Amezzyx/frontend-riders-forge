@@ -179,28 +179,43 @@ function App() {
     loadProducts();
   }, []);
 
+  const getStockForProductSize = (productId, size) => {
+    const product = products.find(p => p.id === productId);
+    if (!product) return 0;
+    if (product.sizeQuantities && typeof product.sizeQuantities === 'object' && size != null) {
+      return Number(product.sizeQuantities[size]) || 0;
+    }
+    return Number(product.quantity) || 0;
+  };
+
+  const getCartQuantityForProductSize = (productId, size) => {
+    return cart.reduce(
+      (sum, item) => (item.id === productId && item.size === size ? sum + (item.quantity || 0) : sum),
+      0
+    );
+  };
+
   const handleAddToCart = (product, size) => {
-    const cartItem = {
-      ...product,
-      size: size,
-      quantity: 1
-    };
+    const stock = getStockForProductSize(product.id, size);
+    const inCart = getCartQuantityForProductSize(product.id, size);
+    const available = stock - inCart;
+    if (available <= 0) {
+      alert('No more in stock for this size.');
+      return;
+    }
 
     setCart(prevCart => {
-      // Check if item with same id and size already exists
       const existingItemIndex = prevCart.findIndex(
         item => item.id === product.id && item.size === size
       );
 
       if (existingItemIndex >= 0) {
-        // Update quantity if item exists
         const newCart = [...prevCart];
-        newCart[existingItemIndex].quantity += 1;
+        const newQty = Math.min(newCart[existingItemIndex].quantity + 1, stock);
+        newCart[existingItemIndex].quantity = newQty;
         return newCart;
-      } else {
-        // Add new item
-        return [...prevCart, cartItem];
       }
+      return [...prevCart, { ...product, size, quantity: 1 }];
     });
 
     setIsCartOpen(true);
@@ -215,10 +230,14 @@ function App() {
       handleRemoveItem(index);
       return;
     }
+    const item = cart[index];
+    if (!item) return;
+    const maxStock = getStockForProductSize(item.id, item.size);
+    const capped = Math.min(newQuantity, maxStock);
 
     setCart(prevCart => {
       const newCart = [...prevCart];
-      newCart[index].quantity = newQuantity;
+      newCart[index].quantity = capped;
       return newCart;
     });
   };
@@ -260,13 +279,20 @@ function App() {
           />
           <Route 
             path="/product/:id" 
-            element={<ProductDetail products={products} onAddToCart={handleAddToCart} />} 
+            element={
+              <ProductDetail
+                products={products}
+                cart={cart}
+                onAddToCart={handleAddToCart}
+              />
+            } 
           />
           <Route 
             path="/cart" 
             element={
               <Cart 
                 cart={cart}
+                products={products}
                 onRemoveItem={handleRemoveItem}
                 onUpdateQuantity={handleUpdateQuantity}
               />
@@ -299,7 +325,7 @@ function App() {
 
         <ShoppingCart
           cart={cart}
-          isOpen={isCartOpen}
+          products={products}
           onClose={() => setIsCartOpen(false)}
           onRemoveItem={handleRemoveItem}
           onUpdateQuantity={handleUpdateQuantity}
