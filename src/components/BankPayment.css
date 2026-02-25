@@ -1,0 +1,242 @@
+.bank-payment {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  border: 1px solid #eee;
+}
+
+.bank-payment-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.bank-payment-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bank-payment-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.payment-amount-box {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+.amount-label {
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.amount-value {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.bank-details-section {
+  margin-bottom: 30px;
+}
+
+.bank-details-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bank-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.bank-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bank-detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.bank-detail-item label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bank-detail-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  gap: 10px;
+}
+
+.bank-detail-value span {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  font-family: 'Courier New', monospace;
+  word-break: break-all;
+}
+
+.iban-code,
+.reference-code {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+.copy-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  min-width: 40px;
+}
+
+.copy-btn:hover {
+  background: #991b1b;
+}
+
+.reference-note {
+  margin-top: 10px;
+  padding: 12px;
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #856404;
+  line-height: 1.5;
+}
+
+.payment-instructions {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.payment-instructions h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 15px;
+  color: #1a1a1a;
+}
+
+.payment-instructions ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.payment-instructions li {
+  margin-bottom: 12px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.payment-instructions li:last-child {
+  margin-bottom: 0;
+}
+
+.payment-instructions strong {
+  color: #dc2626;
+}
+
+.payment-note {
+  padding: 15px;
+  background: #e7f3ff;
+  border-left: 4px solid #2196F3;
+  border-radius: 4px;
+  margin-bottom: 25px;
+}
+
+.payment-note p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #0d47a1;
+}
+
+.payment-note strong {
+  font-weight: 600;
+}
+
+.bank-payment-actions {
+  text-align: center;
+}
+
+.confirm-payment-btn {
+  width: 100%;
+  padding: 16px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+
+.confirm-payment-btn:hover {
+  background: #991b1b;
+}
+
+.action-note {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .bank-payment {
+    padding: 20px;
+  }
+
+  .bank-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .amount-value {
+    font-size: 28px;
+  }
+}
+
+

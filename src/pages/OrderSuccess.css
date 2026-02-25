@@ -1,0 +1,91 @@
+.order-success-page {
+  padding: 100px 20px;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.success-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 30px;
+  color: #2ecc71;
+  background: #d4edda;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-content h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  color: #dc2626;
+}
+
+.success-message {
+  font-size: 18px;
+  color: #666;
+  margin: 0 0 30px;
+  line-height: 1.6;
+}
+
+.order-number {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0 40px;
+}
+
+.order-number strong {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.success-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 15px 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.primary-btn {
+  background: #991b1b;
+  color: white;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: #7f1d1d;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #dc2626;
+  border: 2px solid #dc2626;
+}
+
+.secondary-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+

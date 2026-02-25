@@ -1,0 +1,83 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle - black -->
+  <circle cx="50" cy="50" r="48" fill="#1a1a1a"/>
+  
+  <!-- Skull head shape -->
+  <path 
+    d="M50 22 C38 22, 28 28, 28 40 C28 46, 30 52, 33 55 L33 60 C33 66, 38 70, 43 70 L45 76 L55 76 L57 70 C62 70, 67 66, 67 60 L67 55 C70 52, 72 46, 72 40 C72 28, 62 22, 50 22 Z" 
+    fill="white" 
+    stroke="#1a1a1a" 
+    stroke-width="1.5"
+  />
+  
+  <!-- Left eye socket - angled -->
+  <path d="M38 40 L32 48 L38 50 L44 48 Z" fill="black"/>
+  
+  <!-- Right eye socket - angled -->
+  <path d="M62 40 L68 48 L62 50 L56 48 Z" fill="black"/>
+  
+  <!-- Nose - inverted heart/spade shape -->
+  <path d="M50 50 L45 56 L50 58 L55 56 Z" fill="black"/>
+  
+  <!-- Mouth with teeth -->
+  <rect x="38" y="58" width="24" height="10" rx="2" fill="black"/>
+  <rect x="40" y="58" width="3" height="10" fill="white"/>
+  <rect x="45" y="58" width="3" height="10" fill="white"/>
+  <rect x="50" y="58" width="3" height="10" fill="white"/>
+  <rect x="55" y="58" width="3" height="10" fill="white"/>
+  
+  <!-- Lightning bolt on forehead -->
+  <path d="M47 30 L49 34 L51 30 L51 36 L53 36 L49 40 L47 36 L47 30 Z" fill="#1a1a1a"/>
+  
+  <!-- Upper left wrench -->
+  <path 
+    d="M22 32 L17 27 L12 22 L9 19 L12 16 L17 21 L22 26" 
+    stroke="white" 
+    stroke-width="4" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  />
+  <circle cx="15" cy="18" r="2.5" fill="white"/>
+  
+  <!-- Upper right wrench -->
+  <path 
+    d="M78 32 L83 27 L88 22 L91 19 L88 16 L83 21 L78 26" 
+    stroke="white" 
+    stroke-width="4" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  />
+  <circle cx="85" cy="18" r="2.5" fill="white"/>
+  
+  <!-- Lower left wrench -->
+  <path 
+    d="M22 72 L17 77 L12 82 L9 85 L12 88 L17 83 L22 78" 
+    stroke="white" 
+    stroke-width="3.5" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  />
+  <circle cx="15" cy="87" r="2.5" fill="white"/>
+  
+  <!-- Lower right wrench -->
+  <path 
+    d="M78 72 L83 77 L88 82 L91 85 L88 88 L83 83 L78 78" 
+    stroke="white" 
+    stroke-width="3.5" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  />
+  <circle cx="85" cy="87" r="2.5" fill="white"/>
+</svg>
+
+
+
+
+
+
+
+
