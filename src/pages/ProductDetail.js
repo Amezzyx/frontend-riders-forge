@@ -24,12 +24,12 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
 
   const handleAddToCart = () => {
     if (product.sizes?.length > 0 && !selectedSize) {
-      Alert(t('pleaseSelectSize') || 'Please select a size', 'info');
+      alert(t('pleaseSelectSize') || 'Please select a size', 'info');
       return;
     }
     
     if (selectedSize && isSizeOutOfStock(selectedSize)) {
-      Alert(t('thisSizeOutOfStock') || 'This size is out of stock', 'info');
+      alert(t('thisSizeOutOfStock') || 'This size is out of stock', 'info');
       return;
     }
     
@@ -38,7 +38,7 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
         ?.replace('{available}', availableToAdd)
         ?.replace('{stock}', selectedSizeStock)
         ?.replace('{inCart}', inCartForSelectedSize);
-      Alert(msg || `Only ${availableToAdd} more available for this size (${selectedSizeStock} in stock, ${inCartForSelectedSize} in cart).`, 'info');
+      alert(msg || `Only ${availableToAdd} more available for this size (${selectedSizeStock} in stock, ${inCartForSelectedSize} in cart).`);
       return;
     }
     
