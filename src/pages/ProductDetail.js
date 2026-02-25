@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { useAlert } from '../context/AlertContext';
 import './ProductDetail.css';
 
 const ProductDetail = ({ products, cart = [], onAddToCart }) => {
