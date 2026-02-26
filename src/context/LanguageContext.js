@@ -478,6 +478,7 @@ const translations = {
     chatbotNavigate: 'You can browse products by category in the main menu: Men, Women, MX Gear and Accessories or check out our featured products on the homepage.',
     chatbotAccount: "You can create an account by clicking 'Login' in the top right corner, then selecting 'Sign Up'. With an account, you can track orders, save addresses, and manage your preferences.",
     chatbotHelp: "I'm here to help! You can ask me about:\n• Shipping and delivery\n• Returns and refunds\n• Product information\n• Order tracking\n• Payment methods\n• Size guides\n• Or anything else about Riders Forge!",
+    chatbotCommandsList: 'Here are the topics I understand (you can write in English or Slovak):\n\n• Shipping – shipping, delivery, doprava, doručenie\n• Returns – return, refund, vrátenie, reklamácia\n• Payment – payment, pay, platba, karta\n• Products – product, stock, produkt, sklad\n• Order tracking – order, track, objednávka, sledovanie\n• Sizes – size, sizing, veľkosť, meranie\n• Contact – contact, support, kontakt, telefón\n• Navigation – menu, categories, ponuka, kategórie\n• Account – account, login, účet, registrácia\n• Help – help, ?, príkazy, pomoc\n\nJust type a word from any topic and I\'ll answer!',
     chatbotDefaultReply: 'I understand you\'re asking about: "{message}". Could you provide more details? You can also contact our support team at support@ridersforge.com for immediate assistance.',
     chatbotButtonTitle: 'Need help? Chat with us!',
     
@@ -1125,6 +1126,7 @@ const translations = {
     chatbotNavigate: 'Produkty môžete prehliadať v hlavnej ponuke podľa kategórií: Muži, Ženy, MX výstroj a Doplnky, alebo si pozrite odporúčané produkty na domovskej stránke.',
     chatbotAccount: 'Účet vytvoríte kliknutím na „Prihlásenie“ v pravom hornom rohu a výberom „Registrovať sa“. S účtom môžete sledovať objednávky, ukladať adresy a spravovať preferencie.',
     chatbotHelp: 'Som tu, aby som pomohol! Môžete sa ma opýtať na:\n• Dopravu a doručenie\n• Vrátenia a refundácie\n• Informácie o produktoch\n• Sledovanie objednávok\n• Spôsoby platby\n• Sprievodcov veľkosťami\n• Alebo čokoľvek o Riders Forge!',
+    chatbotCommandsList: 'Tu sú témy, na ktoré viem odpovedať (môžete písať po slovensky alebo po anglicky):\n\n• Doprava – shipping, delivery, doprava, doručenie\n• Vrátenia – return, refund, vrátenie, reklamácia\n• Platba – payment, pay, platba, karta\n• Produkty – product, stock, produkt, sklad\n• Sledovanie objednávky – order, track, objednávka, sledovanie\n• Veľkosti – size, sizing, veľkosť, meranie\n• Kontakt – contact, support, kontakt, telefón\n• Navigácia – menu, categories, ponuka, kategórie\n• Účet – account, login, účet, registrácia\n• Pomoc – help, ?, príkazy, pomoc\n\nStačí napísať slovo z ktorejkoľvek témy a odpoviem!',
     chatbotDefaultReply: 'Rozumiem, pýtate sa na: „{message}". Môžete uviesť viac detailov? Náš tím podpory na support@ridersforge.com vám môže okamžite pomôcť.',
     chatbotButtonTitle: 'Potrebujete pomoc? Napíšte nám!',
     

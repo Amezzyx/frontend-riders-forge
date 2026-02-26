@@ -32,39 +32,83 @@ const Chatbot = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   const getBotResponse = (userMessage, tFn) => {
-    const message = userMessage.toLowerCase().trim();
+    const msg = userMessage.toLowerCase().trim();
+    // Normalize for matching: remove accents for Slovak (č->c, š->s, etc.) so we can match both
+    const normalized = msg
+      .replace(/[čć]/g, 'c').replace(/[ď]/g, 'd').replace(/[ěé]/g, 'e')
+      .replace(/[ň]/g, 'n').replace(/[ř]/g, 'r').replace(/[š]/g, 's')
+      .replace(/[ť]/g, 't').replace(/[ůú]/g, 'u').replace(/[ý]/g, 'y')
+      .replace(/[ž]/g, 'z').replace(/[í]/g, 'i').replace(/[áàä]/g, 'a').replace(/[ó]/g, 'o');
 
-    if (message.match(/^(hi|hello|hey|greetings|ahoj|čau|dobrý|zdravím)/)) {
+    // Help / commands – show list of topics (check first so "help" doesn't match contact)
+    if (msg.match(/^(\?|help|commands|prikazy|príkazy|príkaz|čo vieš|čo viete|co vies|what can you do|topics|témy|temy|zoznam|list)$/) ||
+        normalized.match(/^(help|prikazy|prikaz|co vies|what can you|topics|zoznam|list)$/)) {
+      return tFn('chatbotCommandsList');
+    }
+
+    // Greetings (EN + SK)
+    if (msg.match(/^(hi|hello|hey|greetings|ahoj|čau|cau|dobrý|dobry|zdravím|zdravim|dobre (ranny|den|vecer))/) ||
+        normalized.match(/^(hi|hello|hey|ahoj|cau|dobry|zdravim)/)) {
       return tFn('chatbotGreetingReply');
     }
-    if (message.match(/(shipping|delivery|how long|when will|arrive|doprava|doručenie|dodanie|kedy príde)/)) {
+
+    // Shipping (EN + SK)
+    if (msg.match(/(shipping|delivery|how long|when will|arrive|doprava|doručenie|dodanie|kedy príde|kedy pride|posielate|dodávate|dodavate|preprava|zásielka|zasielka)/) ||
+        normalized.match(/(doprava|dorucenie|dodanie|kedy pride|posielate|dodavate|preprava|zasielka)/)) {
       return tFn('chatbotShipping');
     }
-    if (message.match(/(return|refund|exchange|send back|vrátenie|reklamácia|vymeniť)/)) {
+
+    // Returns / refunds (EN + SK)
+    if (msg.match(/(return|refund|exchange|send back|vrátenie|reklamácia|vymeniť|vymenit|reklamovat|reklamacia)/) ||
+        normalized.match(/(vrátenie|vratenie|reklamacia|reklamacia|vymenit)/)) {
       return tFn('chatbotReturns');
     }
-    if (message.match(/(payment|pay|card|credit|debit|paypal|bank transfer|platba|platobné|karta)/)) {
+
+    // Payment (EN + SK)
+    if (msg.match(/(payment|pay|card|credit|debit|paypal|bank transfer|platba|platobné|platobne|karta|platit|uhradiť|uhradit)/) ||
+        normalized.match(/(platba|platobne|karta|platit|uhradit)/)) {
       return tFn('chatbotPayment');
     }
-    if (message.match(/(product|item|size|available|stock|in stock|produkt|tovar|veľkosť|sklad|dostupn)/)) {
+
+    // Products / stock (EN + SK)
+    if (msg.match(/(product|item|size|available|stock|in stock|produkt|tovar|veľkosť|velkost|sklad|dostupn|máte|mate|na sklade)/) ||
+        normalized.match(/(produkt|tovar|velkost|sklad|dostupn|mate|na sklade)/)) {
       return tFn('chatbotProducts');
     }
-    if (message.match(/(order|track|tracking|status|where is my order|objednávka|sledovať|stav)/)) {
+
+    // Order tracking (EN + SK)
+    if (msg.match(/(order|track|tracking|status|where is my order|objednávka|objednavka|sledovať|sledovat|stav (objednávky|objednavky)|kde je)/) ||
+        normalized.match(/(objednavka|objednávka|sledovat|sledovanie|kde je moja)/)) {
       return tFn('chatbotOrderTracking');
     }
-    if (message.match(/(size|sizing|fit|measurement|small|large|medium|veľkosť|meranie|sedí)/)) {
+
+    // Sizing (EN + SK)
+    if (msg.match(/(size|sizing|fit|measurement|small|large|medium|veľkosť|velkost|meranie|sedí|sedi|tabuľka veľkostí|size guide)/) ||
+        normalized.match(/(velkost|meranie|sedi|tabuľka|velkosti)/)) {
       return tFn('chatbotSizing');
     }
-    if (message.match(/(contact|phone|email|support|help|customer service|kontakt|telefón|pomoc)/)) {
+
+    // Contact (EN + SK) – after help so "help" goes to commands
+    if (msg.match(/(contact|phone|email|support|customer service|kontakt|telefón|telefon|email|podpora|napísať|napisat|volať|volat)/) ||
+        normalized.match(/(kontakt|telefon|podpora|napisat|volat)/)) {
       return tFn('chatbotContact');
     }
-    if (message.match(/(navigate|find|where|menu|categories|nájsť|kde|ponuka|kategóri)/)) {
+
+    // Navigation (EN + SK)
+    if (msg.match(/(navigate|find|where|menu|categories|nájsť|najst|kde|ponuka|kategóri|kategorie|hlavná stránka|homepage)/) ||
+        normalized.match(/(najst|kde|ponuka|kategorie|hlavna stranka)/)) {
       return tFn('chatbotNavigate');
     }
-    if (message.match(/(account|login|sign up|register|profile|účet|prihlásenie|registrovať)/)) {
+
+    // Account (EN + SK)
+    if (msg.match(/(account|login|sign up|register|profile|účet|ucet|prihlásenie|prihlasenie|registrovať|registrovat|registrácia)/) ||
+        normalized.match(/(ucet|prihlasenie|registrovat|registracia)/)) {
       return tFn('chatbotAccount');
     }
-    if (message.match(/(help|assist|support|problem|issue|question|pomoc|problém|otázka)/)) {
+
+    // General help (broader)
+    if (msg.match(/(assist|problem|issue|question|pomoc|problém|problem|otázka|otazka|potrebujem|neviem)/) ||
+        normalized.match(/(problem|otazka|potrebujem|neviem)/)) {
       return tFn('chatbotHelp');
     }
 
