@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import './Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login, register } = useAuth();
   const { t } = useLanguage();
+  const successMessage = location.state?.message;
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -90,6 +92,11 @@ const Login = () => {
             }
           </p>
 
+          {successMessage && (
+            <div className="error-message" style={{ color: 'green', marginBottom: '15px', textAlign: 'center', background: '#efe' }}>
+              {successMessage}
+            </div>
+          )}
           {error && (
             <div className="error-message" style={{ color: 'red', marginBottom: '15px', textAlign: 'center' }}>
               {error}

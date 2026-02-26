@@ -11,6 +11,8 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Account from './pages/Account';
 import AdminDashboard from './pages/AdminDashboard';
 import FAQ from './pages/FAQ';
@@ -308,6 +310,8 @@ function App() {
             element={<Checkout cart={cart} onOrderPlaced={handleOrderPlaced} />} 
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/account" element={<Account />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/faq" element={<FAQ />} />
