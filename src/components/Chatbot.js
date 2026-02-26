@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import './Chatbot.css';
 
 const Chatbot = ({ isOpen, onClose }) => {
+  const { t } = useLanguage();
   const [messages, setMessages] = useState([
     {
       type: 'bot',
-      text: 'Hello! I\'m your AI support assistant. How can I help you today?',
+      text: '',
+      isWelcome: true,
       timestamp: new Date()
     }
   ]);
@@ -28,66 +31,45 @@ const Chatbot = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const getBotResponse = (userMessage) => {
+  const getBotResponse = (userMessage, tFn) => {
     const message = userMessage.toLowerCase().trim();
 
-    // Greetings
-    if (message.match(/^(hi|hello|hey|greetings)/)) {
-      return "Hello! I'm here to help you with any questions about Riders Forge. What would you like to know?";
+    if (message.match(/^(hi|hello|hey|greetings|ahoj|čau|dobrý|zdravím)/)) {
+      return tFn('chatbotGreetingReply');
+    }
+    if (message.match(/(shipping|delivery|how long|when will|arrive|doprava|doručenie|dodanie|kedy príde)/)) {
+      return tFn('chatbotShipping');
+    }
+    if (message.match(/(return|refund|exchange|send back|vrátenie|reklamácia|vymeniť)/)) {
+      return tFn('chatbotReturns');
+    }
+    if (message.match(/(payment|pay|card|credit|debit|paypal|bank transfer|platba|platobné|karta)/)) {
+      return tFn('chatbotPayment');
+    }
+    if (message.match(/(product|item|size|available|stock|in stock|produkt|tovar|veľkosť|sklad|dostupn)/)) {
+      return tFn('chatbotProducts');
+    }
+    if (message.match(/(order|track|tracking|status|where is my order|objednávka|sledovať|stav)/)) {
+      return tFn('chatbotOrderTracking');
+    }
+    if (message.match(/(size|sizing|fit|measurement|small|large|medium|veľkosť|meranie|sedí)/)) {
+      return tFn('chatbotSizing');
+    }
+    if (message.match(/(contact|phone|email|support|help|customer service|kontakt|telefón|pomoc)/)) {
+      return tFn('chatbotContact');
+    }
+    if (message.match(/(navigate|find|where|menu|categories|nájsť|kde|ponuka|kategóri)/)) {
+      return tFn('chatbotNavigate');
+    }
+    if (message.match(/(account|login|sign up|register|profile|účet|prihlásenie|registrovať)/)) {
+      return tFn('chatbotAccount');
+    }
+    if (message.match(/(help|assist|support|problem|issue|question|pomoc|problém|otázka)/)) {
+      return tFn('chatbotHelp');
     }
 
-    // Shipping questions
-    if (message.match(/(shipping|delivery|how long|when will|arrive)/)) {
-      return "We offer standard shipping (5-7 business days) and express shipping (2-3 business days). Free shipping is available on orders over €50. Orders are typically processed within 1-2 business days.";
-    }
-
-    // Returns/Refunds
-    if (message.match(/(return|refund|exchange|send back)/)) {
-      return "We offer a 30-day return policy. Items must be unworn, unwashed, and in original packaging. You can initiate a return through your account or contact our support team at support@ridersforge.com.";
-    }
-
-    // Payment questions
-    if (message.match(/(payment|pay|card|credit|debit|paypal|bank transfer)/)) {
-      return "We accept credit/debit cards, PayPal, and bank transfers. All payments are processed securely. Your payment information is encrypted and never stored on our servers.";
-    }
-
-    // Product questions
-    if (message.match(/(product|item|size|available|stock|in stock)/)) {
-      return "You can browse our products by category (Men, Women, MX Gear, Accessories). Each product page shows available sizes and stock status. If you need help finding a specific item, let me know!";
-    }
-
-    // Order tracking
-    if (message.match(/(order|track|tracking|status|where is my order)/)) {
-      return "You can track your order status in your account dashboard. Once your order ships, you'll receive a tracking number via email. If you need help, contact support@ridersforge.com.";
-    }
-
-    // Size questions
-    if (message.match(/(size|sizing|fit|measurement|small|large|medium)/)) {
-      return "Size charts are available on each product page. If you're unsure about sizing, we recommend checking the size guide or contacting our support team for personalized assistance.";
-    }
-
-    // Contact information
-    if (message.match(/(contact|phone|email|support|help|customer service)/)) {
-      return "You can reach us at:\n• Phone: +421 912 123 456\n• Email: support@ridersforge.com\n• Hours: Mon-Fri 09:00 - 16:00\nYou can also visit our Contact page for more options.";
-    }
-
-    // Website navigation
-    if (message.match(/(navigate|find|where|menu|categories)/)) {
-      return "You can browse products by category in the main menu: Men, Women, MX Gear and Accessories or check out our featured products on the homepage.";
-    }
-
-    // Account questions
-    if (message.match(/(account|login|sign up|register|profile)/)) {
-      return "You can create an account by clicking 'Login' in the top right corner, then selecting 'Sign Up'. With an account, you can track orders, save addresses, and manage your preferences.";
-    }
-
-    // General help
-    if (message.match(/(help|assist|support|problem|issue|question)/)) {
-      return "I'm here to help! You can ask me about:\n• Shipping and delivery\n• Returns and refunds\n• Product information\n• Order tracking\n• Payment methods\n• Size guides\n• Or anything else about Riders Forge!";
-    }
-
-    // Default response
-    return "I understand you're asking about: \"" + userMessage + "\". Let me help you with that. Could you provide more details? You can also contact our support team at support@ridersforge.com for immediate assistance.";
+    const defaultMsg = tFn('chatbotDefaultReply');
+    return defaultMsg.replace('{message}', userMessage);
   };
 
   const handleSend = (e) => {
@@ -108,7 +90,7 @@ const Chatbot = ({ isOpen, onClose }) => {
 
     // Simulate bot thinking time
     setTimeout(() => {
-      const botResponse = getBotResponse(userMessage);
+      const botResponse = getBotResponse(userMessage, t);
       const newBotMessage = {
         type: 'bot',
         text: botResponse,
@@ -140,11 +122,11 @@ const Chatbot = ({ isOpen, onClose }) => {
               </svg>
             </div>
             <div>
-              <h3>AI Support Assistant</h3>
-              <span className="chatbot-status">Online</span>
+              <h3>{t('chatbotTitle')}</h3>
+              <span className="chatbot-status">{t('chatbotOnline')}</span>
             </div>
           </div>
-          <button className="chatbot-close-btn" onClick={onClose} aria-label="Close chatbot">
+          <button className="chatbot-close-btn" onClick={onClose} aria-label={t('chatbotCloseLabel')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -163,7 +145,7 @@ const Chatbot = ({ isOpen, onClose }) => {
                 </div>
               )}
               <div className="chatbot-message-content">
-                <p>{message.text}</p>
+                <p>{message.isWelcome ? t('chatbotWelcome') : message.text}</p>
                 <span className="chatbot-message-time">
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </span>
@@ -194,7 +176,7 @@ const Chatbot = ({ isOpen, onClose }) => {
             ref={inputRef}
             type="text"
             className="chatbot-input"
-            placeholder="Type your message..."
+            placeholder={t('chatbotPlaceholder')}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}

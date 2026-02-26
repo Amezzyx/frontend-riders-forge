@@ -461,6 +461,26 @@ const translations = {
     faq8Question: 'Do you offer gift cards?',
     faq8Answer: 'Currently, we do not offer physical or digital gift cards. However, you can purchase items as gifts and we can include a personalized message with your order. Please add gift message details at checkout.',
     
+    // Chatbot
+    chatbotWelcome: "Hello! I'm your AI support assistant. How can I help you today?",
+    chatbotTitle: 'AI Support Assistant',
+    chatbotOnline: 'Online',
+    chatbotPlaceholder: 'Type your message...',
+    chatbotCloseLabel: 'Close chatbot',
+    chatbotGreetingReply: "Hello! I'm here to help you with any questions about Riders Forge. What would you like to know?",
+    chatbotShipping: 'We offer standard shipping (5-7 business days) and express shipping (2-3 business days). Free shipping is available on orders over €50. Orders are typically processed within 1-2 business days.',
+    chatbotReturns: 'We offer a 30-day return policy. Items must be unworn, unwashed, and in original packaging. You can initiate a return through your account or contact our support team at support@ridersforge.com.',
+    chatbotPayment: 'We accept credit/debit cards, PayPal, and bank transfers. All payments are processed securely. Your payment information is encrypted and never stored on our servers.',
+    chatbotProducts: 'You can browse our products by category (Men, Women, MX Gear, Accessories). Each product page shows available sizes and stock status. If you need help finding a specific item, let me know!',
+    chatbotOrderTracking: "You can track your order status in your account dashboard. Once your order ships, you'll receive a tracking number via email. If you need help, contact support@ridersforge.com.",
+    chatbotSizing: "Size charts are available on each product page. If you're unsure about sizing, we recommend checking the size guide or contacting our support team for personalized assistance.",
+    chatbotContact: 'You can reach us at:\n• Phone: +421 912 123 456\n• Email: support@ridersforge.com\n• Hours: Mon-Fri 09:00 - 16:00\nYou can also visit our Contact page for more options.',
+    chatbotNavigate: 'You can browse products by category in the main menu: Men, Women, MX Gear and Accessories or check out our featured products on the homepage.',
+    chatbotAccount: "You can create an account by clicking 'Login' in the top right corner, then selecting 'Sign Up'. With an account, you can track orders, save addresses, and manage your preferences.",
+    chatbotHelp: "I'm here to help! You can ask me about:\n• Shipping and delivery\n• Returns and refunds\n• Product information\n• Order tracking\n• Payment methods\n• Size guides\n• Or anything else about Riders Forge!",
+    chatbotDefaultReply: 'I understand you\'re asking about: "{message}". Could you provide more details? You can also contact our support team at support@ridersforge.com for immediate assistance.',
+    chatbotButtonTitle: 'Need help? Chat with us!',
+    
     // About Page
     aboutRidersForge: 'About Riders Forge',
     premiumGearForRiders: 'Premium Gear for Riders',
@@ -1087,6 +1107,26 @@ const translations = {
     faq7Answer: 'Áno! Po odoslaní vašej objednávky dostanete sledovacie číslo e-mailom. Toto číslo môžete použiť na sledovanie vašej zásielky na našej webovej stránke alebo na webovej stránke dopravcu.',
     faq8Question: 'Ponúkate darčekové poukazy?',
     faq8Answer: 'V súčasnosti neponúkame fyzické ani digitálne darčekové poukazy. Môžete však zakúpiť položky ako darčeky a môžeme pridať personalizovanú správu k vašej objednávke. Prosím pridajte detaily darčekovej správy pri pokladni.',
+    
+    // Chatbot
+    chatbotWelcome: 'Dobrý deň! Som váš asistent AI podpory. Ako vám môžem dnes pomôcť?',
+    chatbotTitle: 'Asistent AI podpory',
+    chatbotOnline: 'Online',
+    chatbotPlaceholder: 'Napíšte svoju správu...',
+    chatbotCloseLabel: 'Zavrieť chat',
+    chatbotGreetingReply: 'Dobrý deň! Som tu, aby som vám pomohol s akýmikoľvek otázkami o Riders Forge. Čo by ste chceli vedieť?',
+    chatbotShipping: 'Ponúkame štandardnú dopravu (5-7 pracovných dní) a expresnú dopravu (2-3 pracovné dni). Bezplatná doprava pri objednávkach nad €50. Objednávky sa zvyčajne spracujú do 1-2 pracovných dní.',
+    chatbotReturns: 'Ponúkame 30-dňovú politiku vrátenia. Tovar musí byť nosený, nepraný a v pôvodnom balení. Vrátenie môžete iniciovať cez svoj účet alebo kontaktovať support@ridersforge.com.',
+    chatbotPayment: 'Akceptujeme kreditné/debetné karty, PayPal a bankové prevody. Všetky platby sú spracované bezpečne. Vaše platobné údaje sú šifrované a nikdy sa neukladajú na našich serveroch.',
+    chatbotProducts: 'Produkty môžete prehliadať podľa kategórií (Muži, Ženy, MX výstroj, Doplnky). Na každej stránke produktu sú zobrazené dostupné veľkosti a stav skladu. Ak potrebujete pomôcť nájsť konkrétny produkt, napíšte mi!',
+    chatbotOrderTracking: 'Stav objednávky môžete sledovať v nástenke účtu. Po odoslaní objednávky dostanete e-mailom sledovacie číslo. Pre pomoc kontaktujte support@ridersforge.com.',
+    chatbotSizing: 'Tabuľky veľkostí sú na každej stránke produktu. Ak si nie ste istí veľkosťou, odporúčame pozrieť si sprievodcu veľkosťami alebo kontaktovať náš tím podpory.',
+    chatbotContact: 'Môžete nás kontaktovať:\n• Telefón: +421 912 123 456\n• E-mail: support@ridersforge.com\n• Hodiny: Po-Pia 09:00 - 16:00\nViac možností nájdete na stránke Kontakt.',
+    chatbotNavigate: 'Produkty môžete prehliadať v hlavnej ponuke podľa kategórií: Muži, Ženy, MX výstroj a Doplnky, alebo si pozrite odporúčané produkty na domovskej stránke.',
+    chatbotAccount: 'Účet vytvoríte kliknutím na „Prihlásenie“ v pravom hornom rohu a výberom „Registrovať sa“. S účtom môžete sledovať objednávky, ukladať adresy a spravovať preferencie.',
+    chatbotHelp: 'Som tu, aby som pomohol! Môžete sa ma opýtať na:\n• Dopravu a doručenie\n• Vrátenia a refundácie\n• Informácie o produktoch\n• Sledovanie objednávok\n• Spôsoby platby\n• Sprievodcov veľkosťami\n• Alebo čokoľvek o Riders Forge!',
+    chatbotDefaultReply: 'Rozumiem, pýtate sa na: „{message}". Môžete uviesť viac detailov? Náš tím podpory na support@ridersforge.com vám môže okamžite pomôcť.',
+    chatbotButtonTitle: 'Potrebujete pomoc? Napíšte nám!',
     
     // About Page
     aboutRidersForge: 'O Riders Forge',
