@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import './Login.css';
 
 const ForgotPassword = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
+  const [resetCode, setResetCode] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -16,13 +18,20 @@ const ForgotPassword = () => {
     setError('');
     setLoading(true);
     try {
-      await api.forgotPassword(email.trim());
+      const res = await api.forgotPassword(email.trim());
       setSent(true);
+      if (res && res.resetCode) {
+        setResetCode(res.resetCode);
+      }
     } catch (err) {
       setError(err.message || (t('errorOccurred') || 'An error occurred. Please try again.'));
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleContinueToReset = () => {
+    navigate('/reset-password', { state: { resetCode } });
   };
 
   if (sent) {
@@ -32,9 +41,52 @@ const ForgotPassword = () => {
           <div className="login-box">
             <h1>{t('checkYourEmail') || 'Check your email'}</h1>
             <p className="login-subtitle">
-              {t('resetEmailSent') || "If an account exists for that email, we've sent instructions to reset your password."}
+              {resetCode
+                ? (t('recoveryCodeBelow') || 'Your recovery code is in the simulated notification below.')
+                : (t('resetEmailSent') || "If an account exists for that email, we've sent instructions to reset your password.")}
             </p>
-            <p className="login-subtitle">
+
+            {/* Simulated email notification */}
+            <div className="simulated-email">
+              <div className="simulated-email-header">
+                <span className="simulated-email-icon">✉</span>
+                <span className="simulated-email-title">
+                  {t('passwordResetEmail') || 'Password reset'}
+                </span>
+              </div>
+              <div className="simulated-email-from">
+                <strong>{t('from') || 'From'}:</strong> noreply@ridersforge.com
+              </div>
+              <div className="simulated-email-subject">
+                <strong>{t('subject') || 'Subject'}:</strong>{' '}
+                {t('yourRecoveryCode') || 'Your password recovery code'}
+              </div>
+              <div className="simulated-email-body">
+                {resetCode ? (
+                  <>
+                    <p>{t('recoveryCodeMessage') || 'Use this code to reset your password:'}</p>
+                    <p className="recovery-code-value">{resetCode}</p>
+                    <p className="recovery-code-hint">
+                      {t('recoveryCodeHint') || 'Enter this code on the next screen along with your new password.'}
+                    </p>
+                    <button
+                      type="button"
+                      className="submit-btn"
+                      onClick={handleContinueToReset}
+                      style={{ marginTop: 16 }}
+                    >
+                      {t('continueToResetPassword') || 'Continue to reset password'}
+                    </button>
+                  </>
+                ) : (
+                  <p className="simulated-email-no-message">
+                    {t('noMessageForEmail') || 'No password reset request found for this email address.'}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <p className="login-subtitle" style={{ marginTop: 24 }}>
               <Link to="/login" className="forgot-password">
                 {t('backToLogin') || 'Back to login'}
               </Link>
@@ -51,7 +103,7 @@ const ForgotPassword = () => {
         <div className="login-box">
           <h1>{t('forgotPassword') || 'Forgot password'}</h1>
           <p className="login-subtitle">
-            {t('forgotPasswordSubtitle') || 'Enter your email and we\'ll send you a link to reset your password.'}
+            {t('forgotPasswordSubtitle') || "Enter your email and we'll show you a recovery code in a simulated email notification."}
           </p>
 
           {error && (
@@ -73,7 +125,7 @@ const ForgotPassword = () => {
             </div>
 
             <button type="submit" className="submit-btn" disabled={loading}>
-              {loading ? (t('processing') || 'Processing...') : (t('sendResetLink') || 'Send reset link')}
+              {loading ? (t('processing') || 'Processing...') : (t('sendRecoveryCode') || 'Send recovery code')}
             </button>
           </form>
 

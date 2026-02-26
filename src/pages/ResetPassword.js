@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import './Login.css';
@@ -7,12 +7,17 @@ import './Login.css';
 const ResetPassword = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const token = searchParams.get('token') || '';
+  const location = useLocation();
+  const tokenFromUrl = searchParams.get('token') || '';
+  const tokenFromState = location.state?.resetCode || '';
   const { t } = useLanguage();
+  const [recoveryCode, setRecoveryCode] = useState(tokenFromState || tokenFromUrl);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const token = recoveryCode.trim();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +31,7 @@ const ResetPassword = () => {
       return;
     }
     if (!token) {
-      setError(t('invalidResetLink') || 'Invalid reset link. Please use the link from your email.');
+      setError(t('recoveryCodeRequired') || 'Please enter the recovery code from the email.');
       return;
     }
     setLoading(true);
@@ -40,36 +45,13 @@ const ResetPassword = () => {
     }
   };
 
-  if (!token) {
-    return (
-      <div className="login-page">
-        <div className="login-container">
-          <div className="login-box">
-            <h1>{t('invalidResetLink') || 'Invalid reset link'}</h1>
-            <p className="login-subtitle">
-              {t('invalidResetLinkSubtitle') || 'This link is missing or invalid. Please request a new password reset from the login page.'}
-            </p>
-            <Link to="/forgot-password" className="forgot-password">
-              {t('requestNewLink') || 'Request new link'}
-            </Link>
-            <p className="switch-mode" style={{ marginTop: 20 }}>
-              <Link to="/login" className="switch-btn">
-                {t('backToLogin') || 'Back to login'}
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="login-page">
       <div className="login-container">
         <div className="login-box">
           <h1>{t('resetPassword') || 'Reset password'}</h1>
           <p className="login-subtitle">
-            {t('resetPasswordSubtitle') || 'Enter your new password below.'}
+            {t('resetPasswordSubtitle') || 'Enter the recovery code and your new password below.'}
           </p>
 
           {error && (
@@ -79,6 +61,17 @@ const ResetPassword = () => {
           )}
 
           <form onSubmit={handleSubmit} className="login-form">
+            <div className="form-group">
+              <label>{t('recoveryCode') || 'Recovery code'} *</label>
+              <input
+                type="text"
+                value={recoveryCode}
+                onChange={(e) => setRecoveryCode(e.target.value)}
+                required
+                placeholder={t('recoveryCodePlaceholder') || 'Paste the code from the email'}
+                autoComplete="one-time-code"
+              />
+            </div>
             <div className="form-group">
               <label>{t('newPassword') || 'New password'} *</label>
               <input
@@ -108,6 +101,10 @@ const ResetPassword = () => {
           </form>
 
           <p className="switch-mode">
+            <Link to="/forgot-password" className="switch-btn">
+              {t('requestNewCode') || 'Request new recovery code'}
+            </Link>
+            {' · '}
             <Link to="/login" className="switch-btn">
               {t('backToLogin') || 'Back to login'}
             </Link>

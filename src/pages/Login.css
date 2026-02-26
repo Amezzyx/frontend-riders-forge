@@ -213,3 +213,72 @@
   color: #1a1a1a;
 }
 
+/* Simulated email notification (forgot password) */
+.simulated-email {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.simulated-email-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #e8e8e8;
+  border-bottom: 1px solid #ddd;
+  font-weight: 600;
+  color: #333;
+}
+
+.simulated-email-icon {
+  font-size: 18px;
+}
+
+.simulated-email-title {
+  flex: 1;
+}
+
+.simulated-email-from,
+.simulated-email-subject {
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #555;
+  border-bottom: 1px solid #eee;
+}
+
+.simulated-email-body {
+  padding: 16px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.simulated-email-body p {
+  margin: 0 0 10px;
+}
+
+.recovery-code-value {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  word-break: break-all;
+  background: #fff;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 12px 0 !important;
+}
+
+.recovery-code-hint {
+  font-size: 12px;
+  color: #666;
+}
+
+.simulated-email-no-message {
+  color: #888;
+  font-style: italic;
+}
+
