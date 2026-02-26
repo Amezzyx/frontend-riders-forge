@@ -5,6 +5,8 @@ import { useAlert } from './context/AlertContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ShoppingCart from './components/ShoppingCart';
+import Chatbot from './components/Chatbot';
+import ChatbotButton from './components/ChatbotButton';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetail from './pages/ProductDetail';
@@ -170,6 +172,7 @@ function App() {
   const { showAlert } = useAlert();
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [products, setProducts] = useState([]);
 
   // Load products from backend on mount
@@ -340,6 +343,12 @@ function App() {
           onClose={() => setIsCartOpen(false)}
           onRemoveItem={handleRemoveItem}
           onUpdateQuantity={handleUpdateQuantity}
+        />
+
+        <ChatbotButton onClick={() => setIsChatbotOpen(true)} />
+        <Chatbot
+          isOpen={isChatbotOpen}
+          onClose={() => setIsChatbotOpen(false)}
         />
       </div>
     </Router>
