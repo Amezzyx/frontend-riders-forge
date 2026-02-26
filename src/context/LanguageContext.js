@@ -269,6 +269,8 @@ const translations = {
     customerService: 'Customer Service',
     information: 'Information',
     allRightsReserved: 'All rights reserved',
+    imageCredit: 'Product images',
+    imageCreditFrom: 'from',
     
     // Product Detail
     productNotFound: 'Product not found',
@@ -932,6 +934,8 @@ const translations = {
     projectDetails: 'Detaily projektu',
     information: 'Informácie',
     allRightsReserved: 'Všetky práva vyhradené',
+    imageCredit: 'Obrázky produktov',
+    imageCreditFrom: 'z',
     
     // Product Detail
     productNotFound: 'Produkt sa nenašiel',

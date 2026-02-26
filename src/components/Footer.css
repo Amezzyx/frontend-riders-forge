@@ -57,6 +57,21 @@
   font-size: 14px;
 }
 
+.footer-credit {
+  margin-top: 8px !important;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.footer-credit a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: underline;
+}
+
+.footer-credit a:hover {
+  color: white;
+}
+
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: repeat(2, 1fr);

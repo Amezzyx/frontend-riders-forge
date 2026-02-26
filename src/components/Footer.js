@@ -50,6 +50,10 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <p>&copy; {new Date().getFullYear()} Riders Forge. {t('allRightsReserved')}.</p>
+          <p className="footer-credit">
+            {t('imageCredit')} {t('imageCreditFrom')}{' '}
+            <a href="https://grenzgaenger-shop.com" target="_blank" rel="noopener noreferrer">grenzgaenger-shop.com</a>
+          </p>
         </div>
       </div>
     </footer>
