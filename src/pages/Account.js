@@ -602,7 +602,7 @@ const Account = () => {
                       />
                     </div>
                     <div className="form-group">
-                      <label>
+                      <label className="checkbox-label">
                         <input
                           type="checkbox"
                           name="isDefault"
@@ -763,7 +763,7 @@ const Account = () => {
                       </>
                     )}
                     <div className="form-group">
-                      <label>
+                      <label className="checkbox-label">
                         <input
                           type="checkbox"
                           name="isDefault"
