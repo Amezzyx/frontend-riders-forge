@@ -54,20 +54,20 @@ const Contact = () => {
               <div className="contact-details">
                 <div className="contact-item">
                   <h3>{t('phoneWhatsapp') || 'Phone & WhatsApp'}</h3>
-                  <p>+49 721 451951 05</p>
+                  <p>+421 721 451 951</p>
                   <span className="hours">{t('contactHours') || 'Monday to Friday, 09:00 to 16:00'}</span>
                 </div>
 
                 <div className="contact-item">
                   <h3>{t('email') || 'Email'}</h3>
-                  <p>support@grenzgaenger-shop.com</p>
+                  <p>support@ridersforge-shop.com</p>
                   <span className="hours">{t('respondWithin24') || 'We respond within 24 hours'}</span>
                 </div>
 
                 <div className="contact-item">
                   <h3>{t('address') || 'Address'}</h3>
-                  <p>Grenzgaenger Shop<br />
-                  Karlsruhe, Germany</p>
+                  <p>Ridersforge Shop<br />
+                  Bratislava, Slovakia</p>
                 </div>
               </div>
             </div>
