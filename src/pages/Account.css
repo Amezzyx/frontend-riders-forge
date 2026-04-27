@@ -43,6 +43,7 @@
   color: #666;
   border-radius: 4px;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .account-nav button:hover,
@@ -57,6 +58,7 @@
   border-radius: 8px;
   padding: 40px;
   border: 1px solid #eee;
+  min-width: 0; /* prevent grid blowout */
 }
 
 .account-section h2 {
@@ -65,6 +67,19 @@
   margin: 0 0 30px;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.account-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.account-section-header h2 {
+  margin: 0;
 }
 
 .form-row {
@@ -86,13 +101,27 @@
   color: #1a1a1a;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
   font-family: inherit;
+}
+
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 400 !important;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+  margin: 0;
 }
 
 .save-btn,
@@ -109,6 +138,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: background 0.3s;
+  white-space: nowrap;
 }
 
 .save-btn:hover,
@@ -143,6 +173,7 @@
   justify-content: space-between;
   align-items: start;
   margin-bottom: 15px;
+  gap: 10px;
 }
 
 .order-id {
@@ -150,6 +181,7 @@
   font-weight: 600;
   font-size: 16px;
   margin-bottom: 5px;
+  word-break: break-all;
 }
 
 .order-date {
@@ -163,6 +195,8 @@
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .order-status.delivered {
@@ -186,6 +220,7 @@
   margin-bottom: 15px;
   padding-bottom: 15px;
   border-bottom: 1px solid #eee;
+  gap: 10px;
 }
 
 .order-total {
@@ -220,6 +255,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .address-header h3 {
@@ -303,6 +340,7 @@
   display: flex;
   gap: 10px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .address-card .cancel-btn {
@@ -338,6 +376,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .payment-header h3 {
@@ -401,24 +441,149 @@
   display: flex;
   gap: 10px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
+/* error / success banners */
+.error-message {
+  color: red;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #ffe6e6;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: green;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #e6ffe6;
+  border-radius: 4px;
+}
+
+/* ── TABLET ── */
+@media (max-width: 900px) {
+  .account-layout {
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+  }
+
+  .account-content {
+    padding: 24px;
+  }
+}
+
+/* ── MOBILE ── */
 @media (max-width: 768px) {
+  .account-page {
+    padding: 30px 0;
+  }
+
+  .account-page h1 {
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+
   .account-layout {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .account-sidebar {
     position: static;
+    padding: 12px;
   }
 
+  /* Horizontal scrollable tab bar */
   .account-nav {
     flex-direction: row;
     overflow-x: auto;
+    gap: 4px;
+    padding-bottom: 4px;
+    /* hide scrollbar but keep scroll */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .account-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .account-nav button {
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    flex-shrink: 0;
+  }
+
+  .account-nav button.active {
+    background: #991b1b;
+    color: white;
+    border-color: #991b1b;
+  }
+
+  .account-content {
+    padding: 20px 16px;
+  }
+
+  .account-section h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .account-section-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .save-btn,
+  .add-address-btn,
+  .add-payment-btn,
+  .submit-btn,
+  .view-order-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .order-id {
+    font-size: 13px;
+  }
+
+  .order-total {
+    font-size: 16px;
+  }
+
+  .address-header,
+  .payment-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .address-card .form-actions,
+  .payment-card .form-actions {
+    flex-direction: column;
+  }
+
+  .address-card .cancel-btn {
+    width: 100%;
+    text-align: center;
   }
 }
 
+/* ── SMALL PHONES ── */
+@media (max-width: 380px) {
+  .account-page h1 {
+    font-size: 22px;
+  }
+
+  .account-content {
+    padding: 16px 12px;
+  }
+}

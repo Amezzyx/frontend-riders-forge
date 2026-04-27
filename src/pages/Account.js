@@ -492,7 +492,7 @@ const Account = () => {
 
             {activeTab === 'addresses' && (
               <div className="account-section">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <div className="account-section-header">
                   <h2>Saved Addresses</h2>
                   <button 
                     className="add-address-btn"
@@ -651,7 +651,7 @@ const Account = () => {
 
             {activeTab === 'payment' && (
               <div className="account-section">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <div className="account-section-header">
                   <h2>Payment Methods</h2>
                   <button 
                     className="add-payment-btn"
