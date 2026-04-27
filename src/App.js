@@ -34,6 +34,7 @@ import OrderSuccess from './pages/OrderSuccess';
 import OrderDetail from './pages/OrderDetail';
 import api from './services/api';
 import './App.css';
+import ScrollToTop from "./components/ScrollToTop";
 
 // Sample product data
 const sampleProducts = [
@@ -268,6 +269,7 @@ function App() {
 
   return (
     <Router>
+    <ScrollToTop />
       <div className="App">
         <Header 
           cartCount={cartCount}
