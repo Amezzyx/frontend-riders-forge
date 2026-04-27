@@ -31,6 +31,29 @@ const translations = {
     mxGear: 'MX Gear',
     accessories: 'Accessories',
     graphics: 'Graphics',
+
+    // Subcategories - Men
+    hoodiesSweaters: 'Hoodies & Sweaters',
+    tshirts: 'T-shirts',
+    jackets: 'Jackets',
+    pants: 'Pants',
+    shorts: 'Shorts',
+    underwear: 'Underwear',
+
+    // Subcategories - Women
+    sportsBrasBodysuits: 'Sports Bras & Bodysuits',
+    womenHoodies: 'Hoodies',
+    leggings: 'Leggings',
+    sweatpants: 'Sweatpants',
+
+    // Subcategories - MX Gear
+    mxGloves: 'Gloves',
+    mxGoggles: 'MX Goggles',
+    mxPants: 'MX Pants',
+    mxJerseys: 'MX Jerseys',
+    helmets: 'Helmets',
+    bags: 'Bags',
+    protectors: 'Protectors',
     
     // Hero
     heroTitle: 'Premium Gear for Riders',
@@ -681,6 +704,29 @@ const translations = {
     mxGear: 'MX Vybavenie',
     accessories: 'Doplnky',
     graphics: 'Grafika',
+
+    // Subcategories - Men
+    hoodiesSweaters: 'Mikiny & Svetre',
+    tshirts: 'Tričká',
+    jackets: 'Bundy',
+    pants: 'Nohavice',
+    shorts: 'Šortky',
+    underwear: 'Spodné prádlo',
+
+    // Subcategories - Women
+    sportsBrasBodysuits: 'Športové podprsenky & Body',
+    womenHoodies: 'Mikiny',
+    leggings: 'Legíny',
+    sweatpants: 'Tepláky',
+
+    // Subcategories - MX Gear
+    mxGloves: 'Rukavice',
+    mxGoggles: 'MX Okuliare',
+    mxPants: 'MX Nohavice',
+    mxJerseys: 'MX Dresy',
+    helmets: 'Helmy',
+    bags: 'Tašky',
+    protectors: 'Chrániče',
     
     // Hero
     heroTitle: 'Prémiové Vybavenie pre Jazdcov',

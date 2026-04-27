@@ -18,9 +18,29 @@ const Header = ({ cartCount, onCartClick }) => {
   const closeMenu = () => setIsMenuOpen(false);
 
   const categories = {
-    'Men': ['Hoodies & Sweaters', 'T-shirts', 'Jackets', 'Pants', 'Shorts', 'Underwear'],
-    'Women': ['Sports Bras & Bodysuits', 'Hoodies', 'Leggings', 'Sweatpants'],
-    'MX Gear': ['Gloves', 'MX Goggles', 'MX Pants', 'MX Jerseys', 'Helmets', 'Bags', 'Protectors'],
+    'Men': [
+      { label: t('hoodiesSweaters'), slug: 'hoodies-&-sweaters' },
+      { label: t('tshirts'), slug: 't-shirts' },
+      { label: t('jackets'), slug: 'jackets' },
+      { label: t('pants'), slug: 'pants' },
+      { label: t('shorts'), slug: 'shorts' },
+      { label: t('underwear'), slug: 'underwear' },
+    ],
+    'Women': [
+      { label: t('sportsBrasBodysuits'), slug: 'sports-bras-&-bodysuits' },
+      { label: t('womenHoodies'), slug: 'hoodies' },
+      { label: t('leggings'), slug: 'leggings' },
+      { label: t('sweatpants'), slug: 'sweatpants' },
+    ],
+    'MX Gear': [
+      { label: t('mxGloves'), slug: 'gloves' },
+      { label: t('mxGoggles'), slug: 'mx-goggles' },
+      { label: t('mxPants'), slug: 'mx-pants' },
+      { label: t('mxJerseys'), slug: 'mx-jerseys' },
+      { label: t('helmets'), slug: 'helmets' },
+      { label: t('bags'), slug: 'bags' },
+      { label: t('protectors'), slug: 'protectors' },
+    ],
     'Accessories': [],
     'Graphics': []
   };
@@ -97,12 +117,12 @@ const Header = ({ cartCount, onCartClick }) => {
                   {activeCategory === category && categories[category].length > 0 && (
                     <ul className="submenu">
                       {categories[category].map(subItem => (
-                        <li key={subItem}>
+                        <li key={subItem.slug}>
                           <Link
-                            to={`/category/${category.toLowerCase().replace(' ', '-')}/${subItem.toLowerCase().replace(/\s+/g, '-')}`}
+                            to={`/category/${category.toLowerCase().replace(' ', '-')}/${subItem.slug}`}
                             onClick={closeMenu}
                           >
-                            {subItem}
+                            {subItem.label}
                           </Link>
                         </li>
                       ))}
