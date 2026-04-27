@@ -15,6 +15,8 @@ const Header = ({ cartCount, onCartClick }) => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const closeMenu = () => setIsMenuOpen(false);
+
   const categories = {
     'Men': ['Hoodies & Sweaters', 'T-shirts', 'Jackets', 'Pants', 'Shorts', 'Underwear'],
     'Women': ['Sports Bras & Bodysuits', 'Hoodies', 'Leggings', 'Sweatpants'],
@@ -70,7 +72,7 @@ const Header = ({ cartCount, onCartClick }) => {
       <nav className="navbar">
         <div className="container">
           <div className="navbar-content">
-            <Link to="/" className="logo">
+            <Link to="/" className="logo" onClick={closeMenu}>
               <div className="logo-container">
                 <Logo width={45} height={45} />
                 <h1>Riders Forge</h1>
@@ -78,22 +80,28 @@ const Header = ({ cartCount, onCartClick }) => {
             </Link>
 
             <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-              {/* Desktop menu - categories */}
+              {/* Desktop menu - categories with submenus */}
               {Object.keys(categories).map(category => (
-                <li 
+                <li
                   key={category}
                   className="nav-item desktop-only"
                   onMouseEnter={() => setActiveCategory(category)}
                   onMouseLeave={() => setActiveCategory(null)}
                 >
-                  <Link to={category === 'Graphics' ? '/graphics' : `/category/${category.toLowerCase().replace(' ', '-')}`}>
+                  <Link
+                    to={category === 'Graphics' ? '/graphics' : `/category/${category.toLowerCase().replace(' ', '-')}`}
+                    onClick={closeMenu}
+                  >
                     {categoryTranslations[category] || category}
                   </Link>
                   {activeCategory === category && categories[category].length > 0 && (
                     <ul className="submenu">
                       {categories[category].map(subItem => (
                         <li key={subItem}>
-                          <Link to={`/category/${category.toLowerCase().replace(' ', '-')}/${subItem.toLowerCase().replace(/\s+/g, '-')}`}>
+                          <Link
+                            to={`/category/${category.toLowerCase().replace(' ', '-')}/${subItem.toLowerCase().replace(/\s+/g, '-')}`}
+                            onClick={closeMenu}
+                          >
                             {subItem}
                           </Link>
                         </li>
@@ -102,12 +110,23 @@ const Header = ({ cartCount, onCartClick }) => {
                   )}
                 </li>
               ))}
-              {/* Mobile menu - simple menu */}
+
+              {/* Mobile menu links */}
+              {Object.keys(categories).map(category => (
+                <li key={`mobile-${category}`} className="nav-item mobile-only">
+                  <Link
+                    to={category === 'Graphics' ? '/graphics' : `/category/${category.toLowerCase().replace(' ', '-')}`}
+                    onClick={closeMenu}
+                  >
+                    {categoryTranslations[category] || category}
+                  </Link>
+                </li>
+              ))}
               <li className="nav-item mobile-only">
-                <Link to="/about" onClick={() => setIsMenuOpen(false)}>{t('about') || 'O nás'}</Link>
+                <Link to="/about" onClick={closeMenu}>{t('about') || 'O nás'}</Link>
               </li>
               <li className="nav-item mobile-only">
-                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>{t('contact') || 'Kontakt'}</Link>
+                <Link to="/contact" onClick={closeMenu}>{t('contact') || 'Kontakt'}</Link>
               </li>
             </ul>
 
@@ -157,8 +176,8 @@ const Header = ({ cartCount, onCartClick }) => {
                 </svg>
                 {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </button>
-              <button 
-                className="menu-toggle"
+              <button
+                className={`menu-toggle ${isMenuOpen ? 'open' : ''}`}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle Menu"
               >
@@ -175,4 +194,3 @@ const Header = ({ cartCount, onCartClick }) => {
 };
 
 export default Header;
-

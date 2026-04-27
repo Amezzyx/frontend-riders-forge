@@ -370,22 +370,66 @@
   border-color: #999;
 }
 
+/* ── TABLET ── */
+@media (max-width: 1024px) {
+  .category-header h1 {
+    font-size: 34px;
+  }
+
+  .graphics-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .graphics-features .feature-card:nth-child(1),
+  .graphics-features .feature-card:nth-child(2),
+  .graphics-features .feature-card:nth-child(3),
+  .graphics-features .feature-card:nth-child(4) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+/* ── MOBILE ── */
 @media (max-width: 768px) {
+  .category-header {
+    padding: 30px 16px 24px;
+  }
+
+  .category-header h1 {
+    font-size: 26px;
+    letter-spacing: 1px;
+  }
+
+  .category-header p {
+    font-size: 14px;
+  }
+
+  .graphics-hero {
+    padding: 40px 16px;
+    margin-bottom: 40px;
+  }
+
   .graphics-hero h1 {
-    font-size: 32px;
+    font-size: 28px;
+    letter-spacing: 1px;
   }
 
   .graphics-subtitle {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .graphics-section h2 {
-    font-size: 24px;
+    font-size: 22px;
+  }
+
+  .graphics-section p {
+    font-size: 15px;
   }
 
   .graphics-features {
     grid-template-columns: 1fr;
     max-width: 100%;
+    gap: 20px;
   }
 
   .graphics-features .feature-card:nth-child(1),
@@ -406,12 +450,20 @@
     font-size: 16px;
   }
 
+  .process-steps li strong {
+    font-size: 17px;
+  }
+
   .graphics-cta {
-    padding: 40px 20px;
+    padding: 30px 16px;
+  }
+
+  .graphics-cta h2 {
+    font-size: 24px;
   }
 
   .graphics-form {
-    padding: 30px 20px;
+    padding: 24px 16px;
   }
 
   .graphics-form .form-row {
@@ -425,6 +477,16 @@
   .btn-submit,
   .btn-cancel {
     width: 100%;
+    text-align: center;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary {
+    text-align: center;
+    padding: 14px 20px;
   }
 }
-

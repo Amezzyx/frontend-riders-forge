@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .header {
   position: sticky;
   top: 0;
@@ -278,7 +282,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  gap: 4px;
+  gap: 5px;
   padding: 5px;
 }
 
@@ -286,7 +290,23 @@
   width: 25px;
   height: 2px;
   background: #dc2626;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  transform-origin: center;
+  display: block;
+}
+
+/* Hamburger → X animation */
+.menu-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menu-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .container {
@@ -295,7 +315,31 @@
   padding: 0 20px;
 }
 
+/* ── TABLET ── */
+@media (max-width: 1024px) {
+  .nav-menu {
+    gap: 18px;
+  }
+
+  .logo h1 {
+    font-size: 20px;
+  }
+}
+
+/* ── MOBILE ── */
 @media (max-width: 768px) {
+  /* Hide top bar country selector on very small screens */
+  .header-top-content {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+
+  .header-top-content a {
+    margin: 0 8px;
+  }
+
+  /* Full-screen slide-in menu */
   .nav-menu {
     position: fixed;
     left: -100%;
@@ -305,12 +349,13 @@
     width: 100%;
     height: 100vh;
     text-align: center;
-    transition: 0.3s;
-    padding: 80px 20px;
-    gap: 30px;
+    transition: left 0.3s ease;
+    padding: 100px 20px 40px;
+    gap: 28px;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    overflow-y: auto;
   }
 
   .nav-menu.active {
@@ -320,10 +365,10 @@
   .nav-menu::before {
     content: 'RIDERS FORGE';
     position: absolute;
-    top: 60px;
+    top: 30px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 42px;
+    font-size: 28px;
     font-weight: 700;
     color: white;
     text-transform: uppercase;
@@ -333,11 +378,13 @@
 
   .nav-item {
     padding: 0;
+    width: 100%;
+    text-align: center;
   }
 
   .nav-item > a {
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -359,20 +406,41 @@
 
   .menu-toggle {
     display: flex;
+    z-index: 10000; /* always above the open menu */
   }
 
   .logo h1 {
-    font-size: 20px;
+    font-size: 18px;
+    letter-spacing: 1px;
   }
 
-  .header-top-content {
-    flex-direction: column;
-    gap: 5px;
-    text-align: center;
+  .logo-container {
+    gap: 8px;
   }
 
-  .header-top-content a {
-    margin: 0 10px;
+  /* Shrink search input on mobile */
+  .search-input {
+    width: 130px;
+    font-size: 13px;
+  }
+
+  /* Tighten action buttons */
+  .navbar-actions {
+    gap: 12px;
+  }
+
+  .navbar {
+    padding: 10px 0;
   }
 }
 
+/* ── SMALL PHONES ── */
+@media (max-width: 380px) {
+  .logo h1 {
+    display: none; /* show only logo icon on very small screens */
+  }
+
+  .search-input {
+    width: 100px;
+  }
+}
