@@ -185,20 +185,18 @@ const ProductDetail = ({ products, cart = [], onAddToCart }) => {
               {(isOutOfStock || selectedSizeOutOfStock) ? (t('outOfStock') || 'Out of Stock') : availableToAdd <= 0 ? (t('allInCart') || 'All in cart') : (addedToCart ? `✓ ${t('addedToCart') || 'Added to Cart!'}` : (t('addToCart') || 'Add to Cart'))}
             </button>
 
-            <div className="product-description">
-              <h3>{t('description') || 'Description'}</h3>
-              <p>
-                Premium quality {product.name.toLowerCase()} from our {product.category} collection. 
-                Made with high-quality materials and attention to detail. Perfect for everyday wear 
-                or special occasions.
-              </p>
-              <ul>
-                <li>High-quality materials</li>
-                <li>Comfortable fit</li>
-                <li>Durable construction</li>
-                <li>Easy care</li>
-              </ul>
-            </div>
+           <div className="product-description">
+  <h3>{t('description')}</h3>
+  <p>
+    {t('productDescriptionText', { productName: product.name, category: product.category })}
+  </p>
+  <ul>
+    <li>{t('highQualityMaterials')}</li>
+    <li>{t('comfortableFit')}</li>
+    <li>{t('durableConstruction')}</li>
+    <li>{t('easyCare')}</li>
+  </ul>
+</div>
 
             <div className="shipping-info">
               <h3>{t('shippingReturns') || 'Shipping & Returns'}</h3>
